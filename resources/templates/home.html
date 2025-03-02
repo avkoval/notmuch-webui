@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Hello Bulma!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <script type="module" src="/assets/js/datastar-1-0-0-beta-9-3caff1580ebe0e7c.js"></script>
   </head>
   <body>
   <section class="section">
@@ -16,6 +17,8 @@
         My first website with <strong>Bulma</strong>!
       </p>
     </div>
+    <div id="question">---</div>
+    <button class="button" data-on-click="@get('/sse-test')">Fetch question</button>
   </section>
   </body>
 </html>

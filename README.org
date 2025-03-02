@@ -112,7 +112,7 @@ FIXME: listing of options this app accepts.
      org.slf4j/jcl-over-slf4j   {:mvn/version "1.7.36"}
      #+end_example
 
-*** Bootstraping plan of [2025-03-02 Sun] [66%]
+*** Bootstraping plan of [2025-03-02 Sun] [88%]
 **** DONE web server/jetty start
      CLOSED: [2025-03-02 Sun 11:10]
      :LOGBOOK:
@@ -154,8 +154,17 @@ FIXME: listing of options this app accepts.
      - State "TODO"       from              [2025-03-02 Sun 11:10]
      :END:
 
-**** WORKING data-star [2/3]
+**** DONE Bulma CSS
+     CLOSED: [2025-03-02 Sun 15:25]
      :LOGBOOK:
+     - State "DONE"       from "TODO"       [2025-03-02 Sun 15:25]
+     - State "TODO"       from              [2025-03-02 Sun 11:10]
+     :END:
+
+**** DONE data-star [3/3]
+     CLOSED: [2025-03-02 Sun 15:25]
+     :LOGBOOK:
+     - State "DONE"       from "WORKING"    [2025-03-02 Sun 15:25]
      - State "WORKING"    from "TODO"       [2025-03-02 Sun 11:20]
      CLOCK: [2025-03-02 Sun 11:18]--[2025-03-02 Sun 11:55] =>  0:37
      - State "TODO"       from              [2025-03-02 Sun 11:10]
@@ -163,12 +172,7 @@ FIXME: listing of options this app accepts.
 
  - [X] Frontend / code / package
  - [X] Rendering static
- - [ ] Backend
-
-**** TODO Bulma CSS
-     :LOGBOOK:
-     - State "TODO"       from              [2025-03-02 Sun 11:10]
-     :END:
+ - [X] Backend
 
 **** TODO Auto-running tests during development
      :LOGBOOK:

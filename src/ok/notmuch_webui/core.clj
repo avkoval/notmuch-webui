@@ -6,6 +6,8 @@
    [reitit.ring :as ring]
    [ring.middleware.reload :refer [wrap-reload]]
    [selmer.parser :refer [render-file]]
+   [starfederation.datastar.clojure.api :as d*]
+   [starfederation.datastar.clojure.adapter.ring :refer [->sse-response]]
    )
   (:gen-class))
 
@@ -18,11 +20,28 @@
 (defn handler2 [_]
   {:status 200, :body "ok12"})
 
+
+(defn sse-test [request]
+  ;; Create a SSE response
+  (println "ook-2025-02-25-1740466060")
+  (->sse-response request
+   {:on-open
+    (fn [sse]
+      ;; Merge html fragments into the DOM
+      (d*/merge-fragment! sse
+        "<div id=\"question\">What do you put in a toaster?</div>")
+
+      ;; Merge signals into the signals
+      ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
+      )}))
+
+
 (def app
   (ring/ring-handler
     (ring/router 
      [["/" {:get home}]
       ["/assets/*" (ring/create-resource-handler)]
+      ["/sse-test" {:get sse-test}]
       ])))
 
 
