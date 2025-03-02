@@ -5,14 +5,15 @@
    [ring.adapter.jetty :as jetty]
    [reitit.ring :as ring]
    [ring.middleware.reload :refer [wrap-reload]]
+   [selmer.parser :refer [render-file]]
    )
   (:gen-class))
 
 
-(defn handler [_]
+(defn home [_]
   {:status 200
-   :headers {"Content-Type" "text/plain"}
-   :body "Hello World"})
+   :headers {"Content-Type" "text/html"}
+   :body (render-file "templates/home.html" {})})
 
 (defn handler2 [_]
   {:status 200, :body "ok12"})
@@ -20,8 +21,7 @@
 (def app
   (ring/ring-handler
     (ring/router 
-     [["/" {:get handler2}]
-      ["/hello" {:get handler}]
+     [["/" {:get home}]
       ["/assets/*" (ring/create-resource-handler)]
       ])))
 
