@@ -1,5 +1,3 @@
-
-
 ** Installation
 :PROPERTIES:
 :CUSTOM_ID: installation
@@ -91,6 +89,29 @@ FIXME: listing of options this app accepts.
 :END:
 ** Implementaion plan
 *** Maybe Next
+**** TODO use google icon set?
+     :LOGBOOK:
+     - State "TODO"       from              [2025-03-08 Sat 19:50]
+     :END:
+**** NEXT hot reloading
+     :LOGBOOK:
+     CLOCK: [2025-03-08 Sat 18:32]
+     - State "NEXT"       from "TODO"       [2025-03-07 Fri 20:15]
+     - State "TODO"       from              [2025-03-07 Fri 20:15]
+     :END:
+ - [X] https://tonitalksdev.com/clojure-ring-hot-reloading-html-in-the-browser - Tried, does not work for me!?
+
+**** NEXT Auto-running tests during development
+     :LOGBOOK:
+     - State "NEXT"       from "TODO"       [2025-03-02 Sun 17:05]
+     - State "TODO"       from              [2025-03-02 Sun 11:10]
+     :END:
+
+**** TODO ~.env~ or ~edn~ based configuration
+     :LOGBOOK:
+     - State "TODO"       from              [2025-03-04 Tue 09:25]
+     :END:
+
 **** IDEA jetty9?
      :LOGBOOK:
      - State "IDEA"       from              [2025-03-02 Sun 11:20]
@@ -99,8 +120,10 @@ FIXME: listing of options this app accepts.
      What is this and does it provide any additional benifit?
      - [ ] maybe use https://github.com/sunng87/ring-jetty9-adapter ?
 
-**** NEXT logging?
+**** DONE logging?
+     CLOSED: [2025-03-08 Sat 19:50]
      :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2025-03-08 Sat 19:50]
      - State "NEXT"       from              [2025-03-02 Sun 11:15]
      :END:
 
@@ -112,10 +135,15 @@ FIXME: listing of options this app accepts.
      org.slf4j/jcl-over-slf4j   {:mvn/version "1.7.36"}
      #+end_example
 
-*** Bootstraping plan of [2025-03-02 Sun] [88%]
+*** DONE Bootstraping plan of [2025-03-02 Sun] [100%]
+    CLOSED: [2025-03-04 Tue 09:20]
+    :LOGBOOK:
+    - State "DONE"       from              [2025-03-04 Tue 09:20]
+    :END:
 **** DONE web server/jetty start
-     CLOSED: [2025-03-02 Sun 11:10]
+     CLOSED: [2025-03-02 Sun 17:10]
      :LOGBOOK:
+     - State "DONE"       from "DELEGATE"   [2025-03-02 Sun 17:10]
      - State "DONE"       from              [2025-03-02 Sun 11:10]
      :END:
 **** DONE cider-nrepl
@@ -174,13 +202,93 @@ FIXME: listing of options this app accepts.
  - [X] Rendering static
  - [X] Backend
 
-**** TODO Auto-running tests during development
-     :LOGBOOK:
-     - State "TODO"       from              [2025-03-02 Sun 11:10]
-     :END:
-
 **** Unsorted
 
+*** TODO Screens [10%]
+    :PROPERTIES:
+    :COOKIE_DATA: recursive
+    :END:
+    :LOGBOOK:
+    - State "TODO"       from              [2025-03-04 Tue 09:20]
+    :END:
+
+**** Messgage list screen [14%]
+     :LOGBOOK:
+     CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
+     :END:
+    
+  The concepts of Server Side Events (SSE) allows us to assume that our screen is a function and we should re-render it depending on 
+  the state on server.
+
+***** WORKING use query arguments
+      :LOGBOOK:
+      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:32] =>  0:16
+      - State "WORKING"    from "TODO"       [2025-03-08 Sat 18:15]
+      - State "TODO"       from              [2025-03-08 Sat 18:00]
+      :END:
+
+ - [ ] use default query arguments
+ - [ ] reload part of page on POST
+
+***** TODO Add settings
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-08 Sat 18:00]
+      :END:
+ - [ ] number of messages per screen
+   - [ ] option to match screen size
+   - [ ] option to infinite scroll
+ - [ ] sort
+
+***** TODO tag to translate unixtime to locatime?
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-08 Sat 18:10]
+      :END:
+
+***** TODO Thread view (from notmuch show)
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-08 Sat 18:05]
+      :END:
+
+***** TODO paginator
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-08 Sat 18:05]
+      :END:
+
+***** DONE run notmuch search
+      CLOSED: [2025-03-08 Sat 18:00]
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2025-03-08 Sat 18:00]
+      - State "TODO"       from              [2025-03-04 Tue 09:20]
+      :END:
+
+***** IDEA (maybe) re-render when the new message arrives?
+      :LOGBOOK:
+      - State "IDEA"       from "TODO"       [2025-03-04 Tue 09:20]
+      :END:
+
+**** TODO Endless scrolling on scroll down
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-02 Sun 17:25]
+      :END:
+
+***** WORKING First layout: vertical, like in emacs, mesages list
+      :LOGBOOK:
+      CLOCK: [2025-03-02 Sun 17:50]--[2025-03-02 Sun 18:00] =>  0:10
+      - State "WORKING"    from "TODO"       [2025-03-02 Sun 17:50]
+      - State "TODO"       from              [2025-03-02 Sun 17:25]
+      :END:
+
+ - [ ] Title
+ - [ ] List of messages for this screen
+
+***** TODO Search [/]
+      
+ /Idea: Use ~space~ or ~Enter~ as a signal to query the server./
+
+**** Display message screen [%]
+**** Configuration screen
+
+   Optional, in best case we must be able to show everything based on defaults (default config)
 
 ** License
 :PROPERTIES:
@@ -188,9 +296,4 @@ FIXME: listing of options this app accepts.
 :END:
 Copyright © 2025 Oleksii
 
-/EPLv1.0 is just the default for projects generated by =clj-new=: you
-are not/ /required to open source this project, nor are you required to
-use EPLv1.0!/ /Feel free to remove or change the =LICENSE= file and
-remove or update this/ /section of the =README.md= file!/
-
-Distributed under the Eclipse Public License version 1.0.
+Distributed under the MIT License

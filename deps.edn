@@ -7,6 +7,10 @@
         cider/cider-nrepl {:mvn/version "0.52.0"}
         ring/ring-devel {:mvn/version "1.13.0"}
         selmer/selmer {:mvn/version "1.12.62"}
+        babashka/process {:mvn/version "0.5.22"}
+        org.clojure/tools.logging {:mvn/version "1.3.0"}
+        ch.qos.logback/logback-classic {:mvn/version "1.5.17"}
+        org.clojure/data.json {:mvn/version "2.5.1"}
 
         ;; datastar
         datastar/sdk {:git/url "https://github.com/starfederation/datastar/"

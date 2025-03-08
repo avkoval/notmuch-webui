@@ -5,17 +5,21 @@
    [ring.adapter.jetty :as jetty]
    [reitit.ring :as ring]
    [ring.middleware.reload :refer [wrap-reload]]
-   [selmer.parser :refer [render-file]]
+   [selmer.parser :refer [render-file] :as selmer]
    [starfederation.datastar.clojure.api :as d*]
    [starfederation.datastar.clojure.adapter.ring :refer [->sse-response]]
-   )
+   [ok.notmuch-webui.notmuch :as notmuch]
+   [clojure.pprint :as pp])
   (:gen-class))
 
-
-(defn home [_]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body (render-file "templates/home.html" {})})
+(defn home [request]
+  (let [query "tag:inbox"
+        search-results (notmuch/search query {})]
+    (pp/pprint (take 1 search-results))
+       {:status 200
+        :headers {"Content-Type" "text/html"}
+        :body (render-file "templates/home.html" {:search-results search-results
+                                                  :search-query query})}))
 
 (defn handler2 [_]
   {:status 200, :body "ok12"})
@@ -35,6 +39,20 @@
       ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
       )}))
 
+(defn notmuch-search [request]
+  ;; Create a SSE response
+  (println "ok-2025-03-08-1741458835")
+  (->sse-response request
+   {:on-open
+    (fn [sse]
+      ;; Merge html fragments into the DOM
+      (d*/merge-fragment! sse
+        "<div id=\"message\">Running</div>")
+
+      ;; Merge signals into the signals
+      ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
+      )}))
+
 
 (def app
   (ring/ring-handler
@@ -42,7 +60,9 @@
      [["/" {:get home}]
       ["/assets/*" (ring/create-resource-handler)]
       ["/sse-test" {:get sse-test}]
-      ])))
+      ["/notmuch-search" {:post notmuch-search}]
+      ])
+    (constantly {:status 404, :body "Not Found."})))
 
 
 (def router
@@ -56,6 +76,7 @@
           (jetty/run-jetty
            (-> #'app 
                wrap-reload
+               refresh/wrap-refresh
                )
            {:port 8080 :join? false})))
 
@@ -69,6 +90,7 @@
   "Callable entry point to the application."
   [data]
   (println (str "Hello, " (or (:name data) "World") "!")))
+
 
 (defn run
   [& args]

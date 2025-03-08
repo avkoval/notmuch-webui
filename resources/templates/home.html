@@ -3,22 +3,58 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <title>Notmuch -- Just an email system</title>
+    <link rel="stylesheet" href="/assets/css/bulma.min.css">
     <script type="module" src="/assets/js/datastar-1-0-0-beta-9-3caff1580ebe0e7c.js"></script>
   </head>
   <body>
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Hello World
+        Notmuch -- Just an email system
       </h1>
       <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
+        Fast, global-search and tag-based email system!
       </p>
     </div>
-    <div id="question">---</div>
-    <button class="button" data-on-click="@get('/sse-test')">Fetch question</button>
   </section>
+  <section class="section" data-signals-search-query="'{{ search-query }}'">
+    <div class="container">
+      <input
+        class="input is-primary"
+        type="text"
+        placeholder="Query messages, ex.: subject:some from:str to:str tag:xxx"
+        data-bind-search-query
+      />
+      <div id="message"></div>
+      <button class="button"
+              data-on-click="@post('/notmuch-search')">
+        Refresh 🔎
+      </button>
+      <button class="button">Save this query as ...</button>
+      <table class="table">
+        {% for result in search-results %}
+          <tr>
+            <td>[{{ result.matched }}/{{ result.total }}]</td>
+            <td><a title="{{ result.timestamp }}" href="#">{{ result.date_relative }}</a></td>
+            <td>{{ result.authors }}</td>
+            <td>{{ result.subject }}</td>
+            <td>
+              {% for tag in result.tags %}
+                <div 
+                  data-on-click="$searchQuery = 'tag:{{ tag }}'"
+                  class="tag{% if tag = "bg_spam" %} is-warning{% endif %}
+                     {% if tag = "ham" %} is-success{% endif %}
+                     {% if tag = "unread" %} is-dark{% endif %}
+                     ">
+                  {{ tag }}
+                </div>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </section>      
   </body>
 </html>
