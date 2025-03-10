@@ -1,65 +1,96 @@
 (ns ok.notmuch-webui.core
-  (:require 
+  (:require
    [nrepl.server :as nrepl-server]
    [cider.nrepl :refer (cider-nrepl-handler)]
    [ring.adapter.jetty :as jetty]
    [reitit.ring :as ring]
    [ring.middleware.reload :refer [wrap-reload]]
+   [ring.middleware.params :refer [wrap-params]]
    [selmer.parser :refer [render-file] :as selmer]
    [starfederation.datastar.clojure.api :as d*]
    [starfederation.datastar.clojure.adapter.ring :refer [->sse-response]]
    [ok.notmuch-webui.notmuch :as notmuch]
-   [clojure.pprint :as pp])
+   [ok.notmuch-webui.utils :as utils]
+   [clojure.pprint :as pp]
+   [clojure.data.json :as json]
+   [clojure.walk :refer [keywordize-keys]]
+   )
   (:gen-class))
+
+(def PAGINATOR_LIMIT 10)
+(def SHORTEN_PAGINATOR_ON 5)
+
+
+(defn paginator [total limit query-params]
+  (let [current-page (utils/parse-number (get query-params :page "1"))
+        pages (/ total limit)
+        pages-count (int (if (ratio? pages) (+ 1 pages) pages))]
+    {:total total
+     :current-page current-page
+     :limit limit
+     :pages pages-count
+     :previous-page (if (>= (- current-page 1) 1) (- current-page 1) nil)
+     :next-page (if (<= (+ current-page 1) pages-count) (+ current-page 1) nil)
+     :between-current-and-start (if (> (/ current-page 2) 2) (int (/ current-page 2)) nil)
+     :between-current-and-end (int (/ (- pages-count current-page) 2))
+     })
+  )
+
 
 (defn home [request]
   (let [query "tag:inbox"
-        search-results (notmuch/search query {})]
-    (pp/pprint (take 1 search-results))
-       {:status 200
-        :headers {"Content-Type" "text/html"}
-        :body (render-file "templates/home.html" {:search-results search-results
-                                                  :search-query query})}))
+        search-results (notmuch/search query {})
+        search-results-count (notmuch/search-results-count query {})
+        query-params (utils/decode-form-params (:query-string request))
+        paginator (paginator search-results-count (get notmuch/default-search-options "--limit") query-params)
+        ]
+    ;;(println search-results-count)
+    (println paginator)
+    {:status 200
+     :headers {"Content-Type" "text/html"}
+     :body (render-file "templates/home.html" {:search-results search-results
+                                               :paginator paginator
+                                               :search-query query})}))
 
 (defn handler2 [_]
   {:status 200, :body "ok12"})
 
-
-(defn sse-test [request]
-  ;; Create a SSE response
-  (println "ook-2025-02-25-1740466060")
-  (->sse-response request
-   {:on-open
-    (fn [sse]
-      ;; Merge html fragments into the DOM
-      (d*/merge-fragment! sse
-        "<div id=\"question\">What do you put in a toaster?</div>")
-
-      ;; Merge signals into the signals
-      ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
-      )}))
-
 (defn notmuch-search [request]
   ;; Create a SSE response
-  (println "ok-2025-03-08-1741458835")
   (->sse-response request
    {:on-open
     (fn [sse]
       ;; Merge html fragments into the DOM
-      (d*/merge-fragment! sse
-        "<div id=\"message\">Running</div>")
 
+      (let [query (get-in request [:json :searchQuery])
+            search-results (if (nil? query) {} (notmuch/search query {}))
+            ]
+        ;; (println "ok-2025-03-09-1741514447" (not (nil? (:err search-results))))
+        ;; (println "ok-2025-03-09-1741515030" (not (nil? (:messages search-results))))
+        (cond
+          (not (nil? (:messages search-results)))
+          (d*/merge-fragment! sse
+                                (render-file
+                                 "templates/search-results-table.html" {:search-results search-results
+                                                                        :search-query query}))
+
+          ;; (not (nil? (:err search-results)))
+          ;; (d*/merge-fragment! sse
+          ;;                     (render-file
+          ;;                      "templates/message.html" {:level "warning"
+          ;;                                                :message (:err search-results)}))
+
+          )
+        )
       ;; Merge signals into the signals
       ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
       )}))
-
 
 (def app
   (ring/ring-handler
-    (ring/router 
+    (ring/router
      [["/" {:get home}]
       ["/assets/*" (ring/create-resource-handler)]
-      ["/sse-test" {:get sse-test}]
       ["/notmuch-search" {:post notmuch-search}]
       ])
     (constantly {:status 404, :body "Not Found."})))
@@ -71,33 +102,38 @@
 
 (defonce server (atom nil))
 
+(defn wrap-json-params
+  "Add :json to request map when content-type is application/json"
+  [handler]
+  (fn [request]
+    (let [body (slurp (:body request))]
+      (if (= "application/json" (:content-type request))
+        (handler (assoc request :json (keywordize-keys (json/read-str body))))
+        (handler request)
+        )
+      )))
+
 (defn start! []
   (reset! server
           (jetty/run-jetty
-           (-> #'app 
+           (-> #'app
                wrap-reload
-               refresh/wrap-refresh
+               wrap-params
+               wrap-json-params
                )
            {:port 8080 :join? false})))
 
 (def nrepl-port 7888)
 
 (defn start-nrepl []
-  (println (str "Starting nrepl-server on port " nrepl-port))
+  (println (str "Starting nrepl-server on port: " nrepl-port))
   (nrepl-server/start-server :port nrepl-port :handler cider-nrepl-handler))
 
-(defn greet
-  "Callable entry point to the application."
-  [data]
-  (println (str "Hello, " (or (:name data) "World") "!")))
 
+(defn run [& args]
+  (start!))
 
-(defn run
-  [& args]
-  )
-
-(defn -main
-  [& args]
+(defn -main [& args]
   (start!)
-  (start-nrepl)
-  )
+  (selmer.parser/cache-off!)
+  (start-nrepl))

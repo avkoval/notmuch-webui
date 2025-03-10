@@ -95,7 +95,7 @@ FIXME: listing of options this app accepts.
      :END:
 **** NEXT hot reloading
      :LOGBOOK:
-     CLOCK: [2025-03-08 Sat 18:32]
+     CLOCK: [2025-03-08 Sat 18:32]--[2025-03-09 Sun 07:23] => 12:51
      - State "NEXT"       from "TODO"       [2025-03-07 Fri 20:15]
      - State "TODO"       from              [2025-03-07 Fri 20:15]
      :END:
@@ -222,13 +222,24 @@ FIXME: listing of options this app accepts.
 
 ***** WORKING use query arguments
       :LOGBOOK:
+      CLOCK: [2025-03-10 Mon 07:32]--[2025-03-10 Mon 09:00] =>  1:28
+      CLOCK: [2025-03-09 Sun 07:23]--[2025-03-09 Sun 12:57] =>  5:34
       CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:32] =>  0:16
       - State "WORKING"    from "TODO"       [2025-03-08 Sat 18:15]
       - State "TODO"       from              [2025-03-08 Sat 18:00]
       :END:
 
  - [ ] use default query arguments
- - [ ] reload part of page on POST
+   - How to decode JSON params?
+     - https://stackoverflow.com/questions/37397531/ring-read-body-of-a-http-request-as-string
+     - 
+ - [X] reload part of page on POST
+ - [X] reload on SPC
+ - [X] paginator page switch logic
+ - [ ] use paginator argument in rendering!
+ - [ ] move out part of code with table to ~defn~!
+ - [ ] make sure no code injection is possible due to edn/read!
+ - [ ] enter page number in paginator?
 
 ***** TODO Add settings
       :LOGBOOK:
