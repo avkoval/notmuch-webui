@@ -16,9 +16,6 @@
    )
   (:gen-class))
 
-(def PAGINATOR_LIMIT 10)
-(def SHORTEN_PAGINATOR_ON 5)
-
 
 (defn paginator [total limit query-params]
   (let [current-page (utils/parse-number-alt (get query-params :page) 1)
@@ -39,13 +36,16 @@
 
 (defn home [request]
   (let [query "tag:inbox"
-        search-results (notmuch/search query {})
         search-results-count (notmuch/search-results-count query {})
         query-params (utils/decode-form-params (:query-string request))
-        paginator (paginator search-results-count (get notmuch/default-search-options "--limit") query-params)
+        limit (get notmuch/default-search-options "--limit")
+        paginator (paginator search-results-count limit query-params)
+        offset (* (:current-page paginator) limit)
+        search-results (notmuch/search query {"--offset" offset})
         ]
     ;;(println search-results-count)
     (println paginator)
+    (println offset)
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/home.html" {:search-results search-results
