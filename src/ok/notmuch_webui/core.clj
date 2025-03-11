@@ -11,7 +11,6 @@
    [starfederation.datastar.clojure.adapter.ring :refer [->sse-response]]
    [ok.notmuch-webui.notmuch :as notmuch]
    [ok.notmuch-webui.utils :as utils]
-   [clojure.pprint :as pp]
    [clojure.data.json :as json]
    [clojure.walk :refer [keywordize-keys]]
    )
@@ -22,9 +21,10 @@
 
 
 (defn paginator [total limit query-params]
-  (let [current-page (utils/parse-number (get query-params :page "1"))
+  (let [current-page (utils/parse-number-alt (get query-params :page) 1)
         pages (/ total limit)
-        pages-count (int (if (ratio? pages) (+ 1 pages) pages))]
+        pages-count (int (if (ratio? pages) (+ 1 pages) pages))
+        between-current-and-end (+ current-page (int (/ (- pages-count current-page) 2)))]
     {:total total
      :current-page current-page
      :limit limit
@@ -32,7 +32,7 @@
      :previous-page (if (>= (- current-page 1) 1) (- current-page 1) nil)
      :next-page (if (<= (+ current-page 1) pages-count) (+ current-page 1) nil)
      :between-current-and-start (if (> (/ current-page 2) 2) (int (/ current-page 2)) nil)
-     :between-current-and-end (int (/ (- pages-count current-page) 2))
+     :between-current-and-end (if (> (- pages between-current-and-end) 2) between-current-and-end nil)
      })
   )
 
@@ -51,9 +51,6 @@
      :body (render-file "templates/home.html" {:search-results search-results
                                                :paginator paginator
                                                :search-query query})}))
-
-(defn handler2 [_]
-  {:status 200, :body "ok12"})
 
 (defn notmuch-search [request]
   ;; Create a SSE response
@@ -95,10 +92,6 @@
       ])
     (constantly {:status 404, :body "Not Found."})))
 
-
-(def router
-  (ring/router
-    ["/ping" {:get handler2}]))
 
 (defonce server (atom nil))
 

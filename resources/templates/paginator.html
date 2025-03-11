@@ -7,8 +7,10 @@
   {% endif %}
   <ul class="pagination-list">
     {% if paginator.previous-page %}
+      {% if paginator.previous-page > 2 %}
       <li><a href="?page=1" class="pagination-link" aria-label="Goto page 1">1</a></li>
       <li><span class="pagination-ellipsis">&hellip;</span></li>
+      {% endif %}
       {% if paginator.between-current-and-start %}
         <li>
           <a href="?page={{ paginator.between-current-and-start }}" class="pagination-link" 
