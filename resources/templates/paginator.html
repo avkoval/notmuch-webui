@@ -1,4 +1,4 @@
-<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+<nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
   {% if paginator.previous-page %}
     <a href="?page={{ paginator.previous-page }}" class="pagination-previous">Previous</a>
   {% endif %}

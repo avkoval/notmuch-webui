@@ -204,7 +204,7 @@ FIXME: listing of options this app accepts.
 
 **** Unsorted
 
-*** TODO Screens [10%]
+*** TODO Screens [9%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -212,7 +212,7 @@ FIXME: listing of options this app accepts.
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
 
-**** Messgage list screen [14%]
+**** Messgage list screen [12%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -270,6 +270,11 @@ FIXME: listing of options this app accepts.
       :LOGBOOK:
       - State "DONE"       from "TODO"       [2025-03-08 Sat 18:00]
       - State "TODO"       from              [2025-03-04 Tue 09:20]
+      :END:
+
+***** TODO sanitize all user input!
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-12 Wed 09:50]
       :END:
 
 ***** IDEA (maybe) re-render when the new message arrives?

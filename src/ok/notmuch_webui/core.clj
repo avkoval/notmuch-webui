@@ -60,8 +60,15 @@
       ;; Merge html fragments into the DOM
 
       (let [query (get-in request [:json :searchQuery])
-            search-results (if (nil? query) {} (notmuch/search query {}))
+            ;; search-results )
+            search-results-count (notmuch/search-results-count query {})
+            query-params (utils/decode-form-params (:query-string request))
+            limit (get notmuch/default-search-options "--limit")
+            paginator (paginator search-results-count limit query-params)
+            offset (* (:current-page paginator) limit)
+            search-results (if (nil? query) {} (notmuch/search query {"--offset" offset}))
             ]
+        (utils/pprint (:json request))
         ;; (println "ok-2025-03-09-1741514447" (not (nil? (:err search-results))))
         ;; (println "ok-2025-03-09-1741515030" (not (nil? (:messages search-results))))
         (cond
@@ -69,6 +76,7 @@
           (d*/merge-fragment! sse
                                 (render-file
                                  "templates/search-results-table.html" {:search-results search-results
+                                                                        :paginator paginator
                                                                         :search-query query}))
 
           ;; (not (nil? (:err search-results)))
