@@ -204,7 +204,7 @@ FIXME: listing of options this app accepts.
 
 **** Unsorted
 
-*** TODO Screens [9%]
+*** TODO Screens [16%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -212,7 +212,7 @@ FIXME: listing of options this app accepts.
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
 
-**** Messgage list screen [12%]
+**** Messgage list screen [22%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -260,8 +260,20 @@ FIXME: listing of options this app accepts.
       - State "TODO"       from              [2025-03-08 Sat 18:05]
       :END:
 
-***** TODO paginator
+***** WORKING paginator via signal [/]
       :LOGBOOK:
+      CLOCK: [2025-03-13 Thu 08:22]
+      - State "WORKING"    from "TODO"       [2025-03-13 Thu 08:20]
+      - State "TODO"       from              [2025-03-13 Thu 08:20]
+      :END:
+
+ - [ ] change page via signal
+ - [ ] adopt query string change
+
+***** DONE paginator
+      CLOSED: [2025-03-13 Thu 08:20]
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2025-03-13 Thu 08:20]
       - State "TODO"       from              [2025-03-08 Sat 18:05]
       :END:
 

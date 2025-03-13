@@ -17,35 +17,32 @@
   (:gen-class))
 
 
-(defn paginator [total limit query-params]
-  (let [current-page (utils/parse-number-alt (get query-params :page) 1)
-        pages (/ total limit)
+(defn paginator [total limit query page]
+  (let [pages (/ total limit)
         pages-count (int (if (ratio? pages) (+ 1 pages) pages))
-        between-current-and-end (+ current-page (int (/ (- pages-count current-page) 2)))]
+        between-current-and-end (+ page (int (/ (- pages-count page) 2)))]
     {:total total
-     :current-page current-page
+     :current-page page
      :limit limit
      :pages pages-count
-     :previous-page (if (>= (- current-page 1) 1) (- current-page 1) nil)
-     :next-page (if (<= (+ current-page 1) pages-count) (+ current-page 1) nil)
-     :between-current-and-start (if (> (/ current-page 2) 2) (int (/ current-page 2)) nil)
+     :previous-page (if (>= (- page 1) 1) (- page 1) nil)
+     :next-page (if (<= (+ page 1) pages-count) (+ page 1) nil)
+     :between-current-and-start (if (> (/ page 2) 2) (int (/ page 2)) nil)
      :between-current-and-end (if (> (- pages between-current-and-end) 2) between-current-and-end nil)
      })
   )
 
 
 (defn home [request]
-  (let [query "tag:inbox"
+  (let [query-params (utils/decode-form-params (:query-string request))
+        query (or (:query query-params) "tag:inbox")
         search-results-count (notmuch/search-results-count query {})
-        query-params (utils/decode-form-params (:query-string request))
         limit (get notmuch/default-search-options "--limit")
-        paginator (paginator search-results-count limit query-params)
+        page (utils/parse-number-alt (get query-params :page) 1)
+        paginator (paginator search-results-count limit query page)
         offset (* (:current-page paginator) limit)
         search-results (notmuch/search query {"--offset" offset})
         ]
-    ;;(println search-results-count)
-    (println paginator)
-    (println offset)
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/home.html" {:search-results search-results
@@ -61,10 +58,11 @@
 
       (let [query (get-in request [:json :searchQuery])
             ;; search-results )
+            currentPage (get-in request [:json :currentPage] 1)
             search-results-count (notmuch/search-results-count query {})
             query-params (utils/decode-form-params (:query-string request))
             limit (get notmuch/default-search-options "--limit")
-            paginator (paginator search-results-count limit query-params)
+            paginator (paginator search-results-count limit query currentPage)
             offset (* (:current-page paginator) limit)
             search-results (if (nil? query) {} (notmuch/search query {"--offset" offset}))
             ]

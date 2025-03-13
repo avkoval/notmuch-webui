@@ -1,25 +1,27 @@
 <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
   {% if paginator.previous-page %}
-    <a href="?page={{ paginator.previous-page }}" class="pagination-previous">Previous</a>
+    <a data-on-click="$currentPage={{ paginator.previous-page }}; @post('/notmuch-search')" href="#" class="pagination-previous">Previous</a>
   {% endif %}
   {% if paginator.next-page %}
-    <a href="?page={{ paginator.next-page }}" class="pagination-next">Next page</a>
+    <a data-on-click="$currentPage={{ paginator.next-page }}; @post('/notmuch-search')" href="#" class="pagination-next">Next page</a>
   {% endif %}
   <ul class="pagination-list">
     {% if paginator.previous-page %}
       {% if paginator.previous-page > 2 %}
-      <li><a href="?page=1" class="pagination-link" aria-label="Goto page 1">1</a></li>
+      <li><a href="#" data-on-click="$currentPage=1; @post('/notmuch-search')" class="pagination-link" aria-label="Goto page 1">1</a></li>
       <li><span class="pagination-ellipsis">&hellip;</span></li>
       {% endif %}
       {% if paginator.between-current-and-start %}
         <li>
-          <a href="?page={{ paginator.between-current-and-start }}" class="pagination-link" 
+          <a data-on-click="$currentPage={{ paginator.between-current-and-start }}; @post('/notmuch-search')"
+             class="pagination-link"
              aria-label="Goto page {{ paginator.between-current-and-start }}">{{ paginator.between-current-and-start }}</a>
         </li>
         <li><span class="pagination-ellipsis">&hellip;</span></li>
       {% endif %}
       <li>
-        <a href="?page={{ paginator.previous-page }}" class="pagination-link" 
+        <a data-on-click="$currentPage={{ paginator.previous-page }}; @post('/notmuch-search')"
+           class="pagination-link"
            aria-label="Goto page {{ paginator.previous-page }}">{{ paginator.previous-page }}</a>
       </li>
     {% endif %}
@@ -34,18 +36,21 @@
     {% if paginator.next-page %}
       {% if paginator.between-current-and-end %}
         <li>
-          <a href="?page={{ paginator.next-page }}" class="pagination-link" 
+          <a data-on-click="$currentPage={{ paginator.next-page }}; @post('/notmuch-search')"
+             class="pagination-link"
              aria-label="Goto page {{ paginator.next-page }}">{{ paginator.next-page }}</a>
         </li>
         <li><span class="pagination-ellipsis">&hellip;</span></li>
       <li>
-        <a href="?page={{ paginator.between-current-and-end }}" class="pagination-link" 
+        <a data-on-click="$currentPage={{ paginator.between-current-and-end }}; @post('/notmuch-search')"
+           class="pagination-link"
            aria-label="Goto page {{ paginator.between-current-and-end }}">{{ paginator.between-current-and-end }}</a>
       </li>
       <li><span class="pagination-ellipsis">&hellip;</span></li>
       {% endif %}
-      <li><a href="?page={{ paginator.pages }}" class="pagination-link" aria-label="Goto page 86">{{ paginator.pages }}</a></li>
+      <li><a data-on-click="$currentPage={{ paginator.pages }}; @post('/notmuch-search')"
+             class="pagination-link" aria-label="Goto page {{ paginator.pages }}">{{ paginator.pages }}</a></li>
     {% endif %}
   </ul>
 </nav>
-Total: <strong>{{ paginator.total }}</strong> results on <strong>{{ paginator.pages }}</strong> pages.
+Total: <strong>{{ paginator.total }}</strong> results. Page <strong data-text="$currentPage"></strong> of <strong>{{ paginator.pages }}</strong> pages.
