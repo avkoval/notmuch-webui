@@ -13,6 +13,7 @@
    [ok.notmuch-webui.utils :as utils]
    [clojure.data.json :as json]
    [clojure.walk :refer [keywordize-keys]]
+   [clojure.string :as string]
    )
   (:gen-class))
 
@@ -49,45 +50,39 @@
                                                :paginator paginator
                                                :search-query query})}))
 
+(defn sanitize-query 
+  "TODO: escape shell arguments too, remove duplicate tags"
+  [q]
+  (string/replace q #"^\s*and\s" "")
+)
+
 (defn notmuch-search [request]
   ;; Create a SSE response
   (->sse-response request
    {:on-open
     (fn [sse]
       ;; Merge html fragments into the DOM
-
-      (let [query (get-in request [:json :searchQuery])
+      (let [query (sanitize-query (or (get-in request [:json :searchQuery]) "tag:inbox"))
             ;; search-results )
             currentPage (get-in request [:json :currentPage] 1)
-            search-results-count (notmuch/search-results-count query {})
-            query-params (utils/decode-form-params (:query-string request))
+            search-results-count (or (notmuch/search-results-count query {}) 0)
             limit (get notmuch/default-search-options "--limit")
             paginator (paginator search-results-count limit query currentPage)
-            offset (* (:current-page paginator) limit)
+            offset (* (- currentPage 1) limit)
             search-results (if (nil? query) {} (notmuch/search query {"--offset" offset}))
             ]
         (utils/pprint (:json request))
-        ;; (println "ok-2025-03-09-1741514447" (not (nil? (:err search-results))))
-        ;; (println "ok-2025-03-09-1741515030" (not (nil? (:messages search-results))))
         (cond
           (not (nil? (:messages search-results)))
-          (d*/merge-fragment! sse
+          (do 
+            (d*/merge-fragment! sse
                                 (render-file
                                  "templates/search-results-table.html" {:search-results search-results
                                                                         :paginator paginator
                                                                         :search-query query}))
-
-          ;; (not (nil? (:err search-results)))
-          ;; (d*/merge-fragment! sse
-          ;;                     (render-file
-          ;;                      "templates/message.html" {:level "warning"
-          ;;                                                :message (:err search-results)}))
-
-          )
-        )
-      ;; Merge signals into the signals
-      ;; (d*/merge-signals! sse "{response: '', answer: 'bread'}")
-      )}))
+            (d*/merge-signals! sse "{loading: false}")
+            (d*/merge-signals! sse (str "{searchQuery: \"" query " \"}"))
+            ))))}))
 
 (def app
   (ring/ring-handler
@@ -136,3 +131,7 @@
   (start!)
   (selmer.parser/cache-off!)
   (start-nrepl))
+
+(comment
+  (sanitize-query "and tag:replace ")
+)

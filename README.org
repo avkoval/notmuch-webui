@@ -260,14 +260,17 @@ FIXME: listing of options this app accepts.
       - State "TODO"       from              [2025-03-08 Sat 18:05]
       :END:
 
-***** WORKING paginator via signal [/]
+***** WORKING paginator via signal [0/3]
       :LOGBOOK:
-      CLOCK: [2025-03-13 Thu 08:22]
+      CLOCK: [2025-03-13 Thu 08:22]--[2025-03-13 Thu 09:20] =>  0:58
       - State "WORKING"    from "TODO"       [2025-03-13 Thu 08:20]
       - State "TODO"       from              [2025-03-13 Thu 08:20]
       :END:
 
- - [ ] change page via signal
+ - [X] change page via signal
+   - [X] use effect!
+   - +[ ] measure load time!+
+ - +[ ] change ... to avg!! and add label!+
  - [ ] adopt query string change
 
 ***** DONE paginator
