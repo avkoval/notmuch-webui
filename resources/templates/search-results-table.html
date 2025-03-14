@@ -3,9 +3,9 @@
     {% for result in search-results.messages %}
       <tr>
         <td>[{{ result.matched }}/{{ result.total }}]</td>
-        <td><a title="{{ result.timestamp }}" href="#">{{ result.date_relative }}</a></td>
+        <td>{{ result.date_relative }}</td>
         <td>{{ result.authors }}</td>
-        <td>{{ result.subject }}</td>
+        <td><a href="/show-thread/{{ result.thread }}/"  target="_blank">{{ result.subject }}</a></td>
         <td>
           {% for tag in result.tags %}
             <div 

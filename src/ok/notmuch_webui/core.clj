@@ -53,8 +53,11 @@
 (defn sanitize-query 
   "TODO: escape shell arguments too, remove duplicate tags"
   [q]
-  (string/replace q #"^\s*and\s" "")
-)
+  (-> q
+      (string/replace #"^\s*and\s" "")
+      (string/trim)
+      )
+  )
 
 (defn notmuch-search [request]
   ;; Create a SSE response

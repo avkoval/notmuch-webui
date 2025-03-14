@@ -204,7 +204,7 @@ FIXME: listing of options this app accepts.
 
 **** Unsorted
 
-*** TODO Screens [16%]
+*** TODO Screens [15%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -212,13 +212,55 @@ FIXME: listing of options this app accepts.
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
 
-**** Messgage list screen [22%]
+**** Messgage list screen [18%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
     
   The concepts of Server Side Events (SSE) allows us to assume that our screen is a function and we should re-render it depending on 
   the state on server.
+
+***** TODO Make paginator async!
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-14 Fri 21:05]
+      :END:
+
+ .. so we won't wait until count finishes. make it finish async
+
+***** TODO go next page on ~Right~
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-14 Fri 21:10]
+      :END:
+
+***** TODO append on ~Page Down~
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-14 Fri 21:10]
+      :END:
+
+***** TODO Add cache for ~notmuch count~ because threads counting is resource intensive!
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-14 Fri 21:05]
+      :END:
+
+***** DONE fix issue with additional spaces
+      CLOSED: [2025-03-14 Fri 20:35]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-14 Fri 20:35]
+      CLOCK: [2025-03-14 Fri 20:27]--[2025-03-14 Fri 20:35] =>  0:08
+      - State "WORKING"    from "TODO"       [2025-03-14 Fri 20:25]
+      - State "TODO"       from              [2025-03-14 Fri 20:25]
+      :END:
+
+***** WORKING fix count mismatch between ~count~ and actual results in ~search~
+      :LOGBOOK:
+      - State "WORKING"    from              [2025-03-14 Fri 20:40]
+      :END:
+
+
+***** TODO open message screen on subject click
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-14 Fri 20:25]
+      :END:
 
 ***** WORKING use query arguments
       :LOGBOOK:
@@ -229,17 +271,17 @@ FIXME: listing of options this app accepts.
       - State "TODO"       from              [2025-03-08 Sat 18:00]
       :END:
 
- - [ ] use default query arguments
+ - [X] use default query arguments
    - How to decode JSON params?
      - https://stackoverflow.com/questions/37397531/ring-read-body-of-a-http-request-as-string
      - 
  - [X] reload part of page on POST
  - [X] reload on SPC
  - [X] paginator page switch logic
- - [ ] use paginator argument in rendering!
+ - [X] use paginator argument in rendering!
  - [ ] move out part of code with table to ~defn~!
  - [ ] make sure no code injection is possible due to edn/read!
- - [ ] enter page number in paginator?
+ - +[ ] enter page number in paginator?+
 
 ***** TODO Add settings
       :LOGBOOK:

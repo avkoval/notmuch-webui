@@ -3,10 +3,14 @@
    [clojure.string :as string]
    [babashka.process :refer [shell]]
    [clojure.tools.logging :as log]
-   [clojure.data.json :as json]))
+   [clojure.data.json :as json]
+   [clojure.core.cache :as cache]))
 
 (def notmuch-binary "notmuch")
-(def default-search-options {"--offset" 0, "--limit" 9, "--sort" "newest-first", "--format" "json"})
+(def default-search-options {"--offset" 0, "--limit" 9, "--sort" "newest-first", "--format" "json", "--output" "summary"})
+(def default-count-options {"--output" "threads"})
+
+(defonce COUNTS (atom (cache/fifo-cache-factory {})))
 
 (defn search
   "Get messages list"
@@ -25,7 +29,8 @@
 (defn search-results-count
   "Count messages list"
   [q options]
-  (let [shell-args (concat [{:out :string :err :string :continue true} (str notmuch-binary " count")] [q])
+  (let [cmd-options (merge default-count-options options)
+        shell-args (concat [{:out :string :err :string :continue true} (str notmuch-binary " count") ] (conj (into [] (map #(string/join "=" %) cmd-options)) q))
         output (apply shell shell-args)
         ]
     (log/info shell-args)
