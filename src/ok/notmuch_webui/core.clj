@@ -68,7 +68,7 @@
       (let [query (sanitize-query (or (get-in request [:json :searchQuery]) "tag:inbox"))
             ;; search-results )
             currentPage (get-in request [:json :currentPage] 1)
-            search-results-count (or (notmuch/search-results-count query {}) 0)
+            search-results-count (or (notmuch/search-results-count-cached query {}) 0)
             limit (get notmuch/default-search-options "--limit")
             paginator (paginator search-results-count limit query currentPage)
             offset (* (- currentPage 1) limit)
