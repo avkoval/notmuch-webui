@@ -5,7 +5,7 @@
         <td>[{{ result.matched }}/{{ result.total }}]</td>
         <td>{{ result.date_relative }}</td>
         <td>{{ result.authors }}</td>
-        <td><a href="/show-thread/{{ result.thread }}/"  target="_blank">{{ result.subject }}</a></td>
+        <td><a href="/notmuch-show?query=thread:{{ result.thread }}"  target="_blank">{{ result.subject }}</a></td>
         <td>
           {% for tag in result.tags %}
             <div 

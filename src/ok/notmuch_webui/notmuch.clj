@@ -9,6 +9,7 @@
 (def notmuch-binary "notmuch")
 (def default-search-options {"--offset" 0, "--limit" 9, "--sort" "newest-first", "--format" "json", "--output" "summary"})
 (def default-count-options {"--output" "threads"})
+(def default-show-options {"--format" "json"})
 
 (def C2 (atom (cache/fifo-cache-factory {})))
 
@@ -24,7 +25,6 @@
     {:messages (json/read-str (:out output) {:eof-error? false :eof-value nil}) :err errors}
     )
 )
-
 
 (defn search-results-count
   "Count messages list"
@@ -54,7 +54,18 @@
     value
     ))
 
-
+(defn show
+  "Show messages"
+  [q options]
+  (println "ok-2025-03-15-1742025822" q)
+  (let [cmd-options (merge default-show-options options)
+        shell-args (concat [{:out :string :err :string :continue true} (str notmuch-binary " show") ] (conj (into [] (map #(string/join "=" %) cmd-options)) q))
+        output (apply shell shell-args)
+        ]
+    (log/info shell-args)
+    (json/read-str (:out output) {:eof-error? false :eof-value nil})
+    )
+  )
 
 (comment
   (search-results-count "tag:inbox" {})

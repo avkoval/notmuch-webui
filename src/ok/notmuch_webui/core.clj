@@ -50,6 +50,7 @@
                                                :paginator paginator
                                                :search-query query})}))
 
+
 (defn sanitize-query 
   "TODO: escape shell arguments too, remove duplicate tags"
   [q]
@@ -58,6 +59,20 @@
       (string/trim)
       )
   )
+
+(defn show [request]
+  (let [query-params (utils/decode-form-params (:query-string request))
+        query (or (:query query-params) "thread:not-found")
+        search-results-count (notmuch/search-results-count query {})
+        messages (notmuch/show query {})
+        ]
+    (utils/pprint messages)
+    {:status 200
+     :headers {"Content-Type" "text/html"}
+     :body (render-file "templates/show.html" {:messages messages
+                                               :count search-results-count
+                                               :search-query query})}))
+
 
 (defn notmuch-search [request]
   ;; Create a SSE response
@@ -87,12 +102,15 @@
             (d*/merge-signals! sse (str "{searchQuery: \"" query " \"}"))
             ))))}))
 
+
+
 (def app
   (ring/ring-handler
     (ring/router
      [["/" {:get home}]
       ["/assets/*" (ring/create-resource-handler)]
       ["/notmuch-search" {:post notmuch-search}]
+      ["/notmuch-show" {:get show}]
       ])
     (constantly {:status 404, :body "Not Found."})))
 
