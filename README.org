@@ -1,93 +1,46 @@
-** Installation
+
+Notmuch WebUI - an interface to [[https://notmuchmail.org][notmuch]] mail indexing system.
+
+** Motivation
 :PROPERTIES:
-:CUSTOM_ID: installation
+:CUSTOM_ID: motiv
 :END:
-Download from https://github.com/ok/notmuch-webui
+
+I am a user of ~notmuch~, but I am experiencing some issues with HTML rendering in [[https://www.gnu.org/software/emacs/][Emacs]]. I have tried several
+clients from https://notmuchmail.org/frontends/ but have not found a fully satisfying experience. And so I decided
+to give it a try and develop an own Web based frontend.
+
+So, I am doing this to:
+
+ - Because it is good practice called: [[https://en.wikipedia.org/wiki/Eating_your_own_dog_food]["Eating your own dog food"]] - I am heavy user of my own
+   product, which should lead to good experience for me and others.
+ - To try new technology (e.g. [[https://data-star.dev][data-*]] - which is *excellent* and *inspiring*!)
+ - To showcase that _I can develop in_ Clojure ([[https://www.linkedin.com/in/avkoval/][to potential employers]]), I have tried in the past to switch to being a
+   Clojure developer. However, it seems that most companies are looking for ~mid-level~ developers, so I need to gain
+   experience on my own before applying again.
+ - Because it is fun!
 
 ** Usage
 :PROPERTIES:
 :CUSTOM_ID: usage
 :END:
-FIXME: explanation
 
-Run the project directly, via =:exec-fn=:
-
-#+begin_example
-$ clojure -X:run-x
-Hello, Clojure!
-#+end_example
-
-Run the project, overriding the name to be greeted:
-
-#+begin_example
-$ clojure -X:run-x :name '"Someone"'
-Hello, Someone!
-#+end_example
-
-Run the project directly, via =:main-opts= (=-m ok.notmuch-webui=):
-
-#+begin_example
-$ clojure -M:run-m
-Hello, World!
-#+end_example
-
-Run the project, overriding the name to be greeted:
-
-#+begin_example
-$ clojure -M:run-m Via-Main
-Hello, Via-Main!
-#+end_example
-
-Run the project's tests (they'll fail until you edit them):
-
-#+begin_example
-$ clojure -T:build test
-#+end_example
-
-Run the project's CI pipeline and build an uberjar (this will fail until
-you edit the tests to pass):
-
-#+begin_example
-$ clojure -T:build ci
-#+end_example
-
-Run that uberjar:
-
-#+begin_example
-$ java -jar target/notmuch-webui-0.1.0-SNAPSHOT.jar
-#+end_example
-
-** Options
+*** Dev mode
 :PROPERTIES:
-:CUSTOM_ID: options
+:CUSTOM_ID: dev-mode
 :END:
-FIXME: listing of options this app accepts.
 
-** Examples
-:PROPERTIES:
-:CUSTOM_ID: examples
-:END:
-...
+    #+begin_example
+    clj -M:dev
+    #+end_example
 
-*** Bugs
-:PROPERTIES:
-:CUSTOM_ID: bugs
-:END:
-...
+** COMMENT Implementaion plan
 
-*** Any Other Sections
-:PROPERTIES:
-:CUSTOM_ID: any-other-sections
-:END:
-*** That You Think
-:PROPERTIES:
-:CUSTOM_ID: that-you-think
-:END:
-*** Might be Useful
-:PROPERTIES:
-:CUSTOM_ID: might-be-useful
-:END:
-** Implementaion plan
+   #+begin_quote
+   I am sharing my upcoming plans here. After some time, the old sections will be deleted. I am doing 
+   this work outside of my working hours or on weekends, as I am very busy with my primary job.
+   #+end_quote
+
 *** Maybe Next
 **** TODO use google icon set?
      :LOGBOOK:
@@ -363,10 +316,12 @@ FIXME: listing of options this app accepts.
 
    Optional, in best case we must be able to show everything based on defaults (default config)
 
+
 ** License
+
 :PROPERTIES:
 :CUSTOM_ID: license
 :END:
-Copyright © 2025 Oleksii
+Copyright © 2025 Oleksii Koval
 
 Distributed under the MIT License
