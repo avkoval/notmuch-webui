@@ -18,7 +18,7 @@
   (:gen-class))
 
 
-(defn paginator [total limit query page]
+(defn paginate [total limit query page]
   (let [pages (/ total limit)
         pages-count (int (if (ratio? pages) (+ 1 pages) pages))
         between-current-and-end (+ page (int (/ (- pages-count page) 2)))]
@@ -37,17 +37,16 @@
 (defn home [request]
   (let [query-params (utils/decode-form-params (:query-string request))
         query (or (:query query-params) "tag:inbox")
-        search-results-count (notmuch/search-results-count query {})
         limit (get notmuch/default-search-options "--limit")
         page (utils/parse-number-alt (get query-params :page) 1)
-        paginator (paginator search-results-count limit query page)
-        offset (* (:current-page paginator) limit)
+        offset (* page limit)
         search-results (notmuch/search query {"--offset" offset})
         ]
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/home.html" {:search-results search-results
-                                               :paginator paginator
+                                               :page page
+                                               :paginator nil
                                                :search-query query})}))
 
 
@@ -74,8 +73,29 @@
                                                :search-query query})}))
 
 
+
+(defn paginator [request]
+  (->sse-response request
+   {:on-open
+    (fn [sse]
+      ;; Merge html fragments into the DOM
+      (let [
+            query (sanitize-query (or (get-in request [:query-params "datastar" "searchQuery"]) "tag:inbox"))
+            currentPage (get-in request [:json :currentPage] 1)
+            search-results-count (or (notmuch/search-results-count-cached query {}) 0)
+            limit (get notmuch/default-search-options "--limit")
+            paginator (paginate search-results-count limit query currentPage)
+            ]
+        (utils/pprint query)
+        ;; (println "ok-2025-03-16-1742120591 paginator!")
+        (d*/merge-fragment! sse
+                                (render-file
+                                 "templates/paginator.html" {:paginator paginator
+                                                             :search-query query}))
+        ))}))
+
+
 (defn notmuch-search [request]
-  ;; Create a SSE response
   (->sse-response request
    {:on-open
     (fn [sse]
@@ -85,7 +105,7 @@
             currentPage (get-in request [:json :currentPage] 1)
             search-results-count (or (notmuch/search-results-count-cached query {}) 0)
             limit (get notmuch/default-search-options "--limit")
-            paginator (paginator search-results-count limit query currentPage)
+            paginator (paginate search-results-count limit query currentPage)
             offset (* (- currentPage 1) limit)
             search-results (if (nil? query) {} (notmuch/search query {"--offset" offset}))
             ]
@@ -111,6 +131,7 @@
       ["/assets/*" (ring/create-resource-handler)]
       ["/notmuch-search" {:post notmuch-search}]
       ["/notmuch-show" {:get show}]
+      ["/paginator" {:get paginator}]
       ])
     (constantly {:status 404, :body "Not Found."})))
 
@@ -122,11 +143,12 @@
   [handler]
   (fn [request]
     (let [body (slurp (:body request))]
-      (if (= "application/json" (:content-type request))
+      (if (and (not (= "" body)) (= "application/json" (:content-type request)))
         (handler (assoc request :json (keywordize-keys (json/read-str body))))
         (handler request)
         )
-      )))
+      )
+    ))
 
 (defn start! []
   (reset! server

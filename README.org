@@ -157,15 +157,14 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [15%]
+*** TODO Screens [20%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
     :LOGBOOK:
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
-
-**** Messgage list screen [18%]
+**** Messgage list screen [22%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -173,12 +172,19 @@ So, I am doing this to:
   The concepts of Server Side Events (SSE) allows us to assume that our screen is a function and we should re-render it depending on 
   the state on server.
 
+***** TODO set correct URL & reload to work
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-16 Sun 10:05]
+      :END:
+
 ***** TODO Make paginator async!
       :LOGBOOK:
       - State "TODO"       from              [2025-03-14 Fri 21:05]
       :END:
 
  .. so we won't wait until count finishes. make it finish async
+ 
+ Use *Lazy Load*: https://data-star.dev/examples/lazy_load
 
 ***** TODO go next page on ~Right~
       :LOGBOOK:
@@ -190,8 +196,10 @@ So, I am doing this to:
       - State "TODO"       from              [2025-03-14 Fri 21:10]
       :END:
 
-***** TODO Add cache for ~notmuch count~ because threads counting is resource intensive!
+***** DONE Add cache for ~notmuch count~ because threads counting is resource intensive!
+      CLOSED: [2025-03-16 Sun 10:00]
       :LOGBOOK:
+      - State "DONE"       from "TODO"       [2025-03-16 Sun 10:00]
       - State "TODO"       from              [2025-03-14 Fri 21:05]
       :END:
 
@@ -209,6 +217,15 @@ So, I am doing this to:
       - State "WORKING"    from              [2025-03-14 Fri 20:40]
       :END:
 
+
+****** WORKING switch to 1st page after search term change, if paginator current page > pages
+       :LOGBOOK:
+       CLOCK: [2025-03-16 Sun 10:00]
+       - State "WORKING"    from "TODO"       [2025-03-16 Sun 10:00]
+       - State "TODO"       from              [2025-03-16 Sun 10:00]
+       :END:
+
+  - switch to last page!
 
 ***** TODO open message screen on subject click
       :LOGBOOK:
@@ -315,7 +332,6 @@ So, I am doing this to:
 **** Configuration screen
 
    Optional, in best case we must be able to show everything based on defaults (default config)
-
 
 ** License
 
