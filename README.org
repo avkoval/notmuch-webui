@@ -164,7 +164,7 @@ So, I am doing this to:
     :LOGBOOK:
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
-**** Messgage list screen [22%]
+**** Messgage list screen [27%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -186,8 +186,10 @@ So, I am doing this to:
  
  Use *Lazy Load*: https://data-star.dev/examples/lazy_load
 
-***** TODO go next page on ~Right~
+***** DONE go next/prev page on ~Right~/~Left~
+      CLOSED: [2025-03-17 Mon 10:10]
       :LOGBOOK:
+      - State "DONE"       from "TODO"       [2025-03-17 Mon 10:10]
       - State "TODO"       from              [2025-03-14 Fri 21:10]
       :END:
 
@@ -220,7 +222,7 @@ So, I am doing this to:
 
 ****** WORKING switch to 1st page after search term change, if paginator current page > pages
        :LOGBOOK:
-       CLOCK: [2025-03-16 Sun 10:00]
+       CLOCK: [2025-03-16 Sun 10:00]--[2025-03-16 Sun 13:03] =>  3:03
        - State "WORKING"    from "TODO"       [2025-03-16 Sun 10:00]
        - State "TODO"       from              [2025-03-16 Sun 10:00]
        :END:

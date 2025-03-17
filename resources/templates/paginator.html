@@ -2,10 +2,15 @@
   {% if paginator %}
     <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
       {% if paginator.previous-page %}
-        <a data-on-click="$loading=true; $currentPage={{ paginator.previous-page }}; @post('/notmuch-search')" href="#" class="pagination-previous">Previous</a>
+        <a
+          data-on-keydown__window="if(evt.key == 'ArrowLeft') { $currentPage = {{paginator.previous-page}}; @post('/notmuch-search') }; ''"
+          data-on-click="$loading=true; $currentPage={{ paginator.previous-page }}; @post('/notmuch-search')"
+          href="#" class="pagination-previous">Previous</a>
       {% endif %}
       {% if paginator.next-page %}
-        <a data-on-click="$loading=true; $currentPage={{ paginator.next-page }}; @post('/notmuch-search')" href="#" class="pagination-next">Next page</a>
+        <a
+          data-on-keydown__window="if(evt.key == 'ArrowRight') { $currentPage = {{paginator.next-page}}; @post('/notmuch-search') }; ''"
+          data-on-click="$loading=true; $currentPage={{ paginator.next-page }}; @post('/notmuch-search')" href="#" class="pagination-next">Next page</a>
       {% endif %}
       <ul class="pagination-list">
         {% if paginator.previous-page %}
