@@ -60,7 +60,12 @@
         {% endif %}
       </ul>
     </nav>
-    Total: <strong>{{ paginator.total }}</strong> threads. <span id="loading-page" data-show="$loading">Loading </span> Page <strong data-text="$currentPage"></strong> of <strong>{{ paginator.pages }}</strong> pages.
+    Total: <strong>{{ paginator.total }}</strong> threads.
+    <span id="loading-page" data-show="$loading">
+      <span class="icon">
+        <i class="fas fa-spinner fa-spin"></i>
+      </span>
+    </span> Page <strong data-text="$currentPage"></strong> of <strong>{{ paginator.pages }}</strong> pages.
   {% else %}
     <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
       <ul class="pagination-list">
