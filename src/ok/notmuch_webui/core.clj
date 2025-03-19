@@ -21,12 +21,13 @@
 (defn paginate [total limit query page options]
   (let [pages (/ total limit)
         pages-count (int (if (ratio? pages) (+ 1 pages) pages))
-        between-current-and-end (+ page (int (/ (- pages-count page) 2)))]
+        current-page (if (> page pages-count) pages-count page)
+        between-current-and-end (+ current-page (int (/ (- pages-count page) 2)))]
     {:total total
-     :current-page page
+     :pages pages-count
+     :current-page current-page
      :default-limit (or (:limit options) limit)
      :current-limit limit
-     :pages pages-count
      :previous-page (if (>= (- page 1) 1) (- page 1) nil)
      :next-page (if (<= (+ page 1) pages-count) (+ page 1) nil)
      :between-current-and-start (if (> (/ page 2) 2) (int (/ page 2)) nil)

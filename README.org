@@ -157,14 +157,14 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [20%]
+*** TODO Screens [31%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
     :LOGBOOK:
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
-**** Messgage list screen [27%]
+**** Messgage list screen [36%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -177,14 +177,25 @@ So, I am doing this to:
       - State "TODO"       from              [2025-03-16 Sun 10:05]
       :END:
 
-***** TODO Make paginator async!
+***** DONE Make paginator async!
+      CLOSED: [2025-03-19 Wed 21:55]
       :LOGBOOK:
+      - State "DONE"       from "TODO"       [2025-03-19 Wed 21:55]
       - State "TODO"       from              [2025-03-14 Fri 21:05]
       :END:
 
  .. so we won't wait until count finishes. make it finish async
  
  Use *Lazy Load*: https://data-star.dev/examples/lazy_load
+
+***** DONE reset paginator current page to 1 on new search
+      CLOSED: [2025-03-19 Wed 22:45]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-19 Wed 22:45]
+      - State "WORKING"    from "TODO"       [2025-03-19 Wed 21:55]
+      CLOCK: [2025-03-19 Wed 21:56]--[2025-03-19 Wed 21:58] =>  0:02
+      - State "TODO"       from              [2025-03-19 Wed 13:50]
+      :END:
 
 ***** DONE go next/prev page on ~Right~/~Left~
       CLOSED: [2025-03-17 Mon 10:10]

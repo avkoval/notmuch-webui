@@ -35,13 +35,14 @@
                aria-label="Goto page {{ paginator.previous-page }}">{{ paginator.previous-page }}</a>
           </li>
         {% endif %}
+        {% if paginator.current-page > 0 %}
         <li>
-          <a
-            class="pagination-link is-current"
-            aria-label="Page {{ paginator.current-page }}"
-            aria-current="page"
-          >{{ paginator.current-page }}</a
-                                       >
+          <a class="pagination-link is-current"
+             aria-label="Page {{ paginator.current-page }}"
+             aria-current="page">
+            {{ paginator.current-page }}
+          </a>
+          {% endif %}
         </li>
         {% if paginator.next-page %}
           {% if paginator.between-current-and-end %}
