@@ -1,6 +1,9 @@
 <div id="paginator">
   {% if paginator %}
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination"
+         data-signals-current-page="{{ paginator.current-page }}"
+         data-signals-current-limit={{ paginator.current-limit|default:10 }}
+    >
       {% if paginator.previous-page %}
         <a
           data-on-keydown__window="if(evt.key == 'ArrowLeft') { $currentPage = {{paginator.previous-page}}; @post('/notmuch-search') }; ''"
@@ -60,12 +63,18 @@
         {% endif %}
       </ul>
     </nav>
+    <a name="bottom"></a>
     Total: <strong>{{ paginator.total }}</strong> threads.
     <span id="loading-page" data-show="$loading">
       <span class="icon">
         <i class="fas fa-spinner fa-spin"></i>
       </span>
-    </span> Page <strong data-text="$currentPage"></strong> of <strong>{{ paginator.pages }}</strong> pages.
+    </span> Page <strong
+                   data-on-keydown__window="switch(evt.key) {
+                                            case '+': $currentLimit=$currentLimit + {{ paginator.default-limit }}; @post('/notmuch-search'); break;
+                                            case '-': $currentLimit=$currentLimit - {{ paginator.default-limit }}; @post('/notmuch-search'); break;
+                                            }; ''"
+                   data-text="$currentPage"></strong> of <strong>{{ paginator.pages }}</strong> pages (<strong data-text="$currentLimit"></strong> results per page).
   {% else %}
     <nav class="pagination is-centered" role="navigation" aria-label="pagination" data-signals-current-page="{{ paginator.current-page }}">
       <ul class="pagination-list">

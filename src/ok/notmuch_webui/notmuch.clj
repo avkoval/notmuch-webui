@@ -7,7 +7,7 @@
    [clojure.core.cache :as cache]))
 
 (def notmuch-binary "notmuch")
-(def default-search-options {"--offset" 0, "--limit" 9, "--sort" "newest-first", "--format" "json", "--output" "summary"})
+(def default-search-options {"--offset" 0, "--limit" 10, "--sort" "newest-first", "--format" "json", "--output" "summary"})
 (def default-count-options {"--output" "threads"})
 (def default-show-options {"--format" "json"})
 

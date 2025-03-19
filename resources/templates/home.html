@@ -21,7 +21,10 @@
         </p>
       </div>
     </section>
-    <section class="section" data-signals-search-query="'{{ search-query }}'" data-signals-loading="false">
+    <section class="section"
+             data-signals-search-query="'{{ search-query }}'"
+             data-signals-loading="false"
+             >
       <div class="columns">
         <div class="column is-four-fifths">
           <div id="message"></div>
@@ -33,7 +36,7 @@
             data-on-keydown="(evt.key == ' ' || evt.key == 'Enter') && @post('/notmuch-search')"
           />
         </div>
-        
+
         <div class="column">
           <div class="buttons">
             <button class="button" data-on-click="$loading=true; @post('/notmuch-search')">🔎</button>

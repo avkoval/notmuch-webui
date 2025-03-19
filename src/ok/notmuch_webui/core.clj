@@ -18,13 +18,14 @@
   (:gen-class))
 
 
-(defn paginate [total limit query page]
+(defn paginate [total limit query page options]
   (let [pages (/ total limit)
         pages-count (int (if (ratio? pages) (+ 1 pages) pages))
         between-current-and-end (+ page (int (/ (- pages-count page) 2)))]
     {:total total
      :current-page page
-     :limit limit
+     :default-limit (or (:limit options) limit)
+     :current-limit limit
      :pages pages-count
      :previous-page (if (>= (- page 1) 1) (- page 1) nil)
      :next-page (if (<= (+ page 1) pages-count) (+ page 1) nil)
@@ -83,11 +84,11 @@
             query (sanitize-query (or (get-in request [:query-params "datastar" "searchQuery"]) "tag:inbox"))
             currentPage (get-in request [:json :currentPage] 1)
             search-results-count (or (notmuch/search-results-count-cached query {}) 0)
-            limit (get notmuch/default-search-options "--limit")
-            paginator (paginate search-results-count limit query currentPage)
+            default-limit (get notmuch/default-search-options "--limit")
+            limit (or (:currentLimit query) default-limit)
+            paginator (paginate search-results-count limit query currentPage {:limit default-limit})
             ]
-        (utils/pprint query)
-        ;; (println "ok-2025-03-16-1742120591 paginator!")
+        (utils/pprint paginator)
         (d*/merge-fragment! sse
                                 (render-file
                                  "templates/paginator.html" {:paginator paginator
@@ -104,12 +105,15 @@
             ;; search-results )
             currentPage (get-in request [:json :currentPage] 1)
             search-results-count (or (notmuch/search-results-count-cached query {}) 0)
-            limit (get notmuch/default-search-options "--limit")
-            paginator (paginate search-results-count limit query currentPage)
+            default-limit (get notmuch/default-search-options "--limit")
+            currentLimit (get-in request [:json :currentLimit] default-limit)
+            limit (if (>= currentLimit default-limit) currentLimit default-limit)
+            paginator (paginate search-results-count limit query currentPage {:limit default-limit})
             offset (* (- currentPage 1) limit)
-            search-results (if (nil? query) {} (notmuch/search query {"--offset" offset}))
+            search-results (if (nil? query) {} (notmuch/search query {"--offset" offset "--limit" limit}))
             ]
         (utils/pprint (:json request))
+        (utils/pprint paginator)
         (cond
           (not (nil? (:messages search-results)))
           (do 
