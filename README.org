@@ -34,6 +34,26 @@ So, I am doing this to:
     clj -M:dev
     #+end_example
 
+** Status (of Alpha version) [35%]
+   :PROPERTIES:
+   :COOKIE_DATA: recursive
+   :END:
+
+ 1. [X] Project setup
+ 2. [-] Messages list & search  ~WIP~
+    - [X] List messages
+    - [X] Paginator
+      - [X] Set limit (~+~ and ~-)
+      - [X] Keyboard navigation
+    - [ ] Change URL/browsing history
+    - [ ] Sanitize arguments, remove duplicates
+    - [ ] Thread view
+    - [ ] Save query for further use
+    - [ ] Use predefined queries
+    - [ ] Timeout and re-render on new messages (user configured option)
+ 3. [ ] Message screen
+    - [ ] Sanitize HTML/JS/images
+
 ** COMMENT Implementaion plan
 
    #+begin_quote
@@ -157,14 +177,14 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [31%]
+*** TODO Screens [42%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
     :LOGBOOK:
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
-**** Messgage list screen [36%]
+**** Messgage list screen [50%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -204,11 +224,6 @@ So, I am doing this to:
       - State "TODO"       from              [2025-03-14 Fri 21:10]
       :END:
 
-***** TODO append on ~Page Down~
-      :LOGBOOK:
-      - State "TODO"       from              [2025-03-14 Fri 21:10]
-      :END:
-
 ***** DONE Add cache for ~notmuch count~ because threads counting is resource intensive!
       CLOSED: [2025-03-16 Sun 10:00]
       :LOGBOOK:
@@ -224,21 +239,6 @@ So, I am doing this to:
       - State "WORKING"    from "TODO"       [2025-03-14 Fri 20:25]
       - State "TODO"       from              [2025-03-14 Fri 20:25]
       :END:
-
-***** WORKING fix count mismatch between ~count~ and actual results in ~search~
-      :LOGBOOK:
-      - State "WORKING"    from              [2025-03-14 Fri 20:40]
-      :END:
-
-
-****** WORKING switch to 1st page after search term change, if paginator current page > pages
-       :LOGBOOK:
-       CLOCK: [2025-03-16 Sun 10:00]--[2025-03-16 Sun 13:03] =>  3:03
-       - State "WORKING"    from "TODO"       [2025-03-16 Sun 10:00]
-       - State "TODO"       from              [2025-03-16 Sun 10:00]
-       :END:
-
-  - switch to last page!
 
 ***** TODO open message screen on subject click
       :LOGBOOK:
@@ -285,8 +285,10 @@ So, I am doing this to:
       - State "TODO"       from              [2025-03-08 Sat 18:05]
       :END:
 
-***** WORKING paginator via signal [0/3]
+***** DONE paginator via signal [0/3]
+      CLOSED: [2025-03-19 Wed 22:55]
       :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-19 Wed 22:55]
       CLOCK: [2025-03-13 Thu 08:22]--[2025-03-13 Thu 09:20] =>  0:58
       - State "WORKING"    from "TODO"       [2025-03-13 Thu 08:20]
       - State "TODO"       from              [2025-03-13 Thu 08:20]
