@@ -67,7 +67,7 @@
         search-results-count (notmuch/search-results-count query {})
         messages (notmuch/show query {})
         ]
-    (utils/pprint messages)
+    ;; (utils/pprint messages)
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/show.html" {:messages messages
@@ -128,6 +128,11 @@
             ))))}))
 
 
+(selmer/add-tag! :pprint
+  (fn [args context-map]
+    (let [varname (first args)
+          value (get context-map (keyword varname))]
+      (with-out-str (utils/pprint value)))))
 
 (def app
   (ring/ring-handler
@@ -155,6 +160,7 @@
       )
     ))
 
+
 (defn start! []
   (reset! server
           (jetty/run-jetty
@@ -177,9 +183,12 @@
 
 (defn -main [& args]
   (start!)
-  (selmer.parser/cache-off!)
+  (selmer/cache-off!)
   (start-nrepl))
+
+
 
 (comment
   (sanitize-query "and tag:replace ")
+  (selmer/cache-off!)
 )

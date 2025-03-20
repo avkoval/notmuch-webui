@@ -14,6 +14,10 @@
     </style>
   </head>
   <body>
+    <pre>
+    {% pprint messages %}
+    </pre>
+    {% comment %}
     {% for result in messages %}
       {% for thread in result %}
         {% for message in thread %}
@@ -28,5 +32,6 @@
         {% endfor %}
       {% endfor %}
     {% endfor %}
+    {% endcomment %}
   </body>
 </html>

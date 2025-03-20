@@ -62,6 +62,16 @@ So, I am doing this to:
    #+end_quote
 
 *** Maybe Next
+**** TODO static resources size?
+     :LOGBOOK:
+     - State "TODO"       from              [2025-03-20 Thu 07:50]
+     :END:
+
+ - I did not expected Bulma to triple its size with 1.x
+ - [ ] enable gzip jetty?
+ - [ ] May be use postcss and filter out CSS variables as suggested?
+ - [ ] what about font awesome? it also adds a lot, may be remove it or keep it downsized?
+
 **** TODO use google icon set?
      :LOGBOOK:
      - State "TODO"       from              [2025-03-08 Sat 19:50]
@@ -177,7 +187,7 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [42%]
+*** TODO Screens [40%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -324,6 +334,17 @@ So, I am doing this to:
       - State "IDEA"       from "TODO"       [2025-03-04 Tue 09:20]
       :END:
 
+**** WORKING Display message screen [%]
+     :LOGBOOK:
+     CLOCK: [2025-03-20 Thu 07:57]
+     - State "WORKING"    from              [2025-03-20 Thu 07:55]
+     :END:
+
+ - [ ] add tag to pprint/debug json
+ - [ ] format all parts nicely
+ - [ ] add signals to show/hide parts of content
+ - [ ] add top navigation part
+
 **** TODO Endless scrolling on scroll down
       :LOGBOOK:
       - State "TODO"       from              [2025-03-02 Sun 17:25]
@@ -343,7 +364,6 @@ So, I am doing this to:
       
  /Idea: Use ~space~ or ~Enter~ as a signal to query the server./
 
-**** Display message screen [%]
 **** Configuration screen
 
    Optional, in best case we must be able to show everything based on defaults (default config)
