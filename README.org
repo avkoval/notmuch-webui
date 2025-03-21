@@ -336,7 +336,7 @@ So, I am doing this to:
 
 **** WORKING Display message screen [%]
      :LOGBOOK:
-     CLOCK: [2025-03-20 Thu 07:57]
+     CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
      - State "WORKING"    from              [2025-03-20 Thu 07:55]
      :END:
 
