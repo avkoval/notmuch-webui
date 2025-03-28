@@ -1,54 +1,42 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Notmuch -- Just an email system</title>
-    <link rel="stylesheet" href="/assets/css/bulma.min.css">
-    <link rel="stylesheet" href="/assets/css/app.css">
-    <link rel="stylesheet" href="/assets/fa/css/all.min.css">
-    <script type="module" src="/assets/js/datastar-1-0-0-beta-9-3caff1580ebe0e7c.js"></script>
-  </head>
-  <body>
-
-    <section class="section">
-      <div class="container">
-        <h1 class="title">
-          Notmuch -- Just an email system
-        </h1>
-        <p class="subtitle">
-          Fast, global-search and tag-based email system!
-        </p>
+{% extends "templates/base.html" %}
+{% block body %}
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Notmuch -- Just an email system
+      </h1>
+      <p class="subtitle">
+        Fast, global-search and tag-based email system!
+      </p>
+    </div>
+  </section>
+  <section class="section"
+           data-signals-search-query="'{{ search-query }}'"
+           data-signals-loading="false"
+  >
+    <div class="columns">
+      <div class="column is-four-fifths">
+        <div id="message"></div>
+        <input
+          class="input is-primary"
+          type="text"
+          placeholder="Query messages, ex.: subject:some from:str to:str tag:xxx"
+          data-bind-search-query
+          data-on-keydown="(evt.key == ' ' || evt.key == 'Enter') && @post('/notmuch-search')"
+        />
       </div>
-    </section>
-    <section class="section"
-             data-signals-search-query="'{{ search-query }}'"
-             data-signals-loading="false"
-             >
-      <div class="columns">
-        <div class="column is-four-fifths">
-          <div id="message"></div>
-          <input
-            class="input is-primary"
-            type="text"
-            placeholder="Query messages, ex.: subject:some from:str to:str tag:xxx"
-            data-bind-search-query
-            data-on-keydown="(evt.key == ' ' || evt.key == 'Enter') && @post('/notmuch-search')"
-          />
-        </div>
 
-        <div class="column">
-          <div class="buttons">
-            <button class="button" data-on-click="$loading=true; @post('/notmuch-search')">🔎</button>
-            <button class="button" data-on-click="$searchQuery='tag:inbox'; $loading=true; @post('/notmuch-search')">❌</button>
-            <button class="button">💾</button>
-          </div>
+      <div class="column">
+        <div class="buttons">
+          <button class="button" data-on-click="$loading=true; @post('/notmuch-search')">🔎</button>
+          <button class="button" data-on-click="$searchQuery='tag:inbox'; $loading=true; @post('/notmuch-search')">❌</button>
+          <button class="button">💾</button>
         </div>
       </div>
-      <div class="content">
-        {% include "templates/search-results-table.html" %}
-      </div>
-      </div>
-    </section>
-  </body>
-</html>
+    </div>
+    <div class="content">
+      {% include "templates/search-results-table.html" %}
+    </div>
+    </div>
+  </section>
+{% endblock %}
