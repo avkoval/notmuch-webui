@@ -54,12 +54,18 @@
     value
     ))
 
+(defn make-shell-args 
+  "Make shell arguments array from map, but if argument value is empty, then don't add it via ="
+  [cmd-options]
+  (into [] (map (fn [args] (if (= "" (last args)) (first args) (string/join "=" args))) cmd-options)))
+
+
 (defn show
   "Show messages"
   [q options]
   (println "ok-2025-03-15-1742025822" q)
   (let [cmd-options (merge default-show-options options)
-        shell-args (concat [{:out :string :err :string :continue true} (str notmuch-binary " show") ] (conj (into [] (map #(string/join "=" %) cmd-options)) q))
+        shell-args (concat [{:out :string :err :string :continue true} (str notmuch-binary " show") ] (conj (make-shell-args cmd-options) q))
         output (apply shell shell-args)
         ]
     (log/info shell-args)

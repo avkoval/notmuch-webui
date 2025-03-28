@@ -66,12 +66,15 @@
   (let [query-params (utils/decode-form-params (:query-string request))
         query (or (:query query-params) "thread:not-found")
         search-results-count (notmuch/search-results-count query {})
-        messages (notmuch/show query {})
+        messages (first (notmuch/show query {}))
+        subject (get-in (first (first messages)) ["headers" "Subject"])
         ]
     ;; (utils/pprint messages)
+    (println subject)
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/show.html" {:messages messages
+                                               :subject subject
                                                :count search-results-count
                                                :search-query query})}))
 

@@ -1,0 +1,43 @@
+{{ parts }}
+{% for level1 in parts %}
+  <p>
+    --part: {{ level1 }} --
+  </p>
+  {% comment %}
+  <h3 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h3>
+  {% if "text/plain" = part.content-type %}
+    <pre>{{ part.content }}</pre> {# FIXME because we (probably) can't trust the content! Double check it! #}
+  {% elif "text/html" = part.content-type %}
+    <span class="icon has-text-link">
+      <i class="fa-solid fa-eye"></i>
+    </span>
+    <button class="button is-primary">iframe</button>
+  {% elif "multipart/alternative" = part.content-type %}
+    {% for level2 in part.content %}
+      <h4 class="is-4 title">{{ level2.id }}<span class="tag is-light">{{ level2.content-type }}</span></h4>
+      {% if "text/plain" = level2.content-type %}
+        <pre>{{ level2.content }}</pre> {# FIXME because we (probably) can't trust the content! Double check it! #}
+      {% elif "text/html" = level2.content-type %}
+        <button class="button is-link is-light"><i class="fas fa-eye"></i>&nbsp;View in new window</button>
+        <button class="button is-link"><i class="fas fa-eye"></i>&nbsp;View in new iframe</button>
+      {% else %}
+        Unrecognized: {{ level2.content-type }}
+      {% endif %}
+    {% endfor %}
+  {% elif "multipart/related" = part.content-type %}
+    {% for level2 in part.content %}
+      <h4 class="is-4 title">{{ level2.id }}<span class="tag is-light">{{ level2.content-type }}</span></h4>
+      {% if "text/plain" = level2.content-type %}
+        <pre>{{ level2.content }}</pre> {# FIXME because we (probably) can't trust the content! Double check it! #}
+      {% elif "text/html" = level2.content-type %}
+        <button class="button is-link is-light"><i class="fas fa-eye"></i>&nbsp;View in new window</button>
+        <button class="button is-link"><i class="fas fa-eye"></i>&nbsp;View in new iframe</button>
+      {% else %}
+        Unrecognized: {{ level2.content-type }}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    Unrecognized: {{ part.content-type }}
+  {% endif %}
+  {% endcomment %}
+{% endfor %}

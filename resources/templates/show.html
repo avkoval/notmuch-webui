@@ -5,33 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Notmuch -- Just an email system</title>
     <link rel="stylesheet" href="/assets/css/bulma.min.css">
+    <link rel="stylesheet" href="/assets/fa/css/all.min.css">
     <script type="module" src="/assets/js/datastar-1-0-0-beta-9-3caff1580ebe0e7c.js"></script>
     <style>
      .loading {
        text-decoration:line-through;
        color: red;
      }
+     .subjects {
+       margin-bottom: 1px !important;
+     }
     </style>
   </head>
   <body>
-    <pre>
-    {% pprint messages %}
-    </pre>
+
+    <h2 class="title is-2">{{ subject }}</h2>
+
+
+    <table class="table">
+      <thead>
+        <tr class="is-info">
+          <th><i class="fa-regular fa-star"></i></th>
+          <th>Date</th>
+          <th>Correspondents</th>
+          <th>Subject</th>
+          <th><i class="fa-regular fa-envelope"></i></th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+
+      {% for message in messages %}
+        {% with content=message|first %}
+          <tr>
+            <td>{% for tag in content.tags %}{% ifequal "important" tag %}<i class="fa-regular fa-star"></i>{% endifequal %}{% endfor %}</td>
+            <td>{{ content.date_relative }}</td>
+            <td>{{ content.headers.From }}</td>
+            <td>{{ content.headers.Subject }}</td>
+            <td>{% for tag in content.tags %}{% ifequal "unread" tag %}<i class="fa-solid fa-envelope"></i>{% endifequal %}{% endfor %}</td>
+            <td>
+              {% for tag in content.tags  %}
+                {{ tag }}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              {% with parts=content.body %}
+                {% include "templates/render_content.html"  %}
+              {% endwith %}
+              {% comment %}
+              {{ content.body }}
+              {% for part in content.body %}
+                <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h4> 
+                {% for subpart in part.content %}
+                  <h4 class="is-4 title">{{ subpart.id }} <span class="tag is-light">{{ subpart.content-type }}</span>
+                  {% if "text/html" = subpart.content-type %}
+                    <span class="icon has-text-link">
+                      <i class="fa-solid fa-eye"></i>
+                    </span>
+                  {% endif %}
+                  </h4>
+                  {% if "text/plain" = subpart.content-type %}
+                    <pre>{{ subpart.content }}</pre> {# FIXME because we (probably) can't trust the content! Double check it! #}
+                  {% else %}
+                    {{ subpart.content-type }}
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}
+              {% endcomment %}
+            </td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+    </table>
     {% comment %}
-    {% for result in messages %}
-      {% for thread in result %}
-        {% for message in thread %}
-          <table class="table">
-            {% for header in message.headers %}
-              <tr><th>{{ header|first }}</th><td>{{ header|last }}</td></tr></tr>
+      {% for result in messages %}
+        {% for thread in result %}
+          {% for message in thread %}
+            <table class="table">
+              {% for header in message.headers %}
+                <tr><th>{{ header|first }}</th><td>{{ header|last }}</td></tr></tr>
+              {% endfor %}
+            </table>
+            {% for elem in message.body|first %}
+              {{ elem }}
             {% endfor %}
-          </table>
-          {% for elem in message.body|first %}
-            {{ elem }}
           {% endfor %}
         {% endfor %}
       {% endfor %}
-    {% endfor %}
+      <hr>
+      <pre>
+        {% pprint messages %}
+      </pre>
     {% endcomment %}
+
   </body>
 </html>

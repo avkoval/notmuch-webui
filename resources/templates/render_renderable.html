@@ -1,0 +1,8 @@
+{% if "text/plain" = icontent.content-type %}
+  <pre>??{{ icontent.content }}</pre> {# FIXME because we (probably) can't trust the content! Double check it! #}
+{% elif "text/html" = icontent.content-type %}
+  <button class="button is-link is-light"><i class="fas fa-eye"></i>&nbsp;View in new window</button>
+  <button class="button is-link"><i class="fas fa-eye"></i>&nbsp;View in new iframe</button>
+{% else %}
+  Unrecognized: {{ icontent.content-type }}
+{% endif %}
