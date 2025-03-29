@@ -1,5 +1,5 @@
 <div id="search-results">
-  <table id="search-results-table" class="table">
+  <table id="search-results-table" class="table" data-class-loading="$loading">
     {% for result in search-results.messages %}
       <tr>
         <td>[{{ result.matched }}/{{ result.total }}]</td>

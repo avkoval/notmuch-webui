@@ -122,6 +122,7 @@
         (cond
           (not (nil? (:messages search-results)))
           (do 
+            (d*/merge-signals! sse "{loading: false}")
             (d*/merge-fragment! sse
                                 (render-file
                                  "templates/search-results-table.html" {:search-results search-results
