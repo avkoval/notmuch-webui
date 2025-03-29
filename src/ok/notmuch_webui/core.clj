@@ -127,8 +127,8 @@
                                  "templates/search-results-table.html" {:search-results search-results
                                                                         :paginator paginator
                                                                         :search-query query}))
-            (d*/merge-signals! sse "{loading: false}")
             (d*/merge-signals! sse (str "{searchQuery: \"" query " \"}"))
+            (d*/merge-signals! sse "{loading: false}")
             ))))}))
 
 
