@@ -339,16 +339,18 @@ So, I am doing this to:
       - State "IDEA"       from "TODO"       [2025-03-04 Tue 09:20]
       :END:
 
-**** WORKING Display message screen [20%]
+**** WORKING Display message screen [27%]
      :LOGBOOK:
      CLOCK: [2025-03-29 Sat 17:11]--[2025-03-29 Sat 17:20] =>  0:09
      CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
      - State "WORKING"    from              [2025-03-20 Thu 07:55]
      :END:
 
-***** TODO fix issue with 1st page render (its 2nd?)
+***** DONE fix issue with 1st page render (its 2nd?)
+      CLOSED: [2025-03-30 Sun 17:25]
       :LOGBOOK:
-      CLOCK: [2025-03-30 Sun 09:12]
+      - State "DONE"       from "TODO"       [2025-03-30 Sun 17:25]
+      CLOCK: [2025-03-30 Sun 09:12]--[2025-03-30 Sun 10:22] =>  1:10
       - State "TODO"       from              [2025-03-30 Sun 09:10]
       :END:
 
@@ -365,6 +367,27 @@ So, I am doing this to:
  - [X] sanitize text - clean up all html tags
  - [X] replace links with a hrefs
  - [X] replace \n with <br>
+
+***** DONE double check all content is present
+      CLOSED: [2025-03-30 Sun 18:10]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-30 Sun 18:10]
+      CLOCK: [2025-03-30 Sun 17:54]--[2025-03-30 Sun 18:10] =>  0:16
+      - State "WORKING"    from "REVIEW"     [2025-03-30 Sun 17:55]
+      - State "REVIEW"     from              [2025-03-30 Sun 17:55]
+      :END:
+
+***** WORKING add signals to show/hide parts of content
+      :LOGBOOK:
+      CLOCK: [2025-03-30 Sun 17:54]--[2025-03-30 Sun 17:54] =>  0:00
+      - State "WORKING"    from "TODO"       [2025-03-30 Sun 17:55]
+      - State "TODO"       from              [2025-03-29 Sat 17:15]
+      :END:
+
+ - [ ] remove table, use columns
+ - [ ] use content, check responsive rendering
+ - [ ] add signals to hide/show based on message N + part N
+ - [ ] use nice icons to do this (triangle?)
 
 ***** TODO display text/html
       :LOGBOOK:
@@ -396,17 +419,12 @@ So, I am doing this to:
       :LOGBOOK:
       - State "TODO"       from              [2025-03-29 Sat 17:15]
       :END:
+***** WORKING format all parts nicely
 ***** TODO add top navigation part
       :LOGBOOK:
       - State "TODO"       from              [2025-03-29 Sat 17:15]
       :END:
 
-***** TODO add signals to show/hide parts of content
-      :LOGBOOK:
-      - State "TODO"       from              [2025-03-29 Sat 17:15]
-      :END:
-
-***** WORKING format all parts nicely
 
 **** TODO Endless scrolling on scroll down
       :LOGBOOK:
