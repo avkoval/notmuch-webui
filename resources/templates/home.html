@@ -22,7 +22,7 @@
           type="text"
           placeholder="Query messages, ex.: subject:some from:str to:str tag:xxx"
           data-bind-search-query
-          data-on-keydown="(evt.key == ' ' || evt.key == 'Enter') && @post('/notmuch-search')"
+          data-on-keydown="(evt.key == 'Enter') && @post('/notmuch-search')"
         />
       </div>
 
