@@ -42,9 +42,10 @@
         query (or (:query query-params) "tag:inbox")
         limit (get notmuch/default-search-options "--limit")
         page (utils/parse-number-alt (get query-params :page) 1)
-        offset (* page limit)
-        search-results (notmuch/search query {"--offset" offset})
-        ]
+        offset (* (- page 1) limit)
+        search-results (notmuch/search query {"--offset" offset "--limit" limit})
+       ]
+    (println "ok-2025-03-30-1743318822" (get query-params :page) page offset)
     {:status 200
      :headers {"Content-Type" "text/html"}
      :body (render-file "templates/home.html" {:search-results search-results
@@ -53,7 +54,7 @@
                                                :search-query query})}))
 
 
-(defn sanitize-query 
+(defn sanitize-query
   "TODO: escape shell arguments too, remove duplicate tags"
   [q]
   (-> q
@@ -84,16 +85,15 @@
   (->sse-response request
    {:on-open
     (fn [sse]
-      ;; Merge html fragments into the DOM
       (let [
             query (sanitize-query (or (get-in request [:query-params "datastar" "searchQuery"]) "tag:inbox"))
-            currentPage (get-in request [:json :currentPage] 1)
+            datastar-query-params  (keywordize-keys (json/read-str (get-in request [:query-params "datastar"])))
+            currentPage (or (get-in request [:json :currentPage]) (:currentPage datastar-query-params) 1)
             search-results-count (or (notmuch/search-results-count-cached query {}) 0)
             default-limit (get notmuch/default-search-options "--limit")
             limit (or (:currentLimit query) default-limit)
             paginator (paginate search-results-count limit query currentPage {:limit default-limit})
             ]
-        (utils/pprint paginator)
         (d*/merge-fragment! sse
                                 (render-file
                                  "templates/paginator.html" {:paginator paginator
@@ -105,9 +105,7 @@
   (->sse-response request
    {:on-open
     (fn [sse]
-      ;; Merge html fragments into the DOM
       (let [query (sanitize-query (or (get-in request [:json :searchQuery]) "tag:inbox"))
-            ;; search-results )
             currentPage (get-in request [:json :currentPage] 1)
             search-results-count (or (notmuch/search-results-count-cached query {}) 0)
             default-limit (get notmuch/default-search-options "--limit")
@@ -121,7 +119,7 @@
         (utils/pprint paginator)
         (cond
           (not (nil? (:messages search-results)))
-          (do 
+          (do
             (d*/merge-signals! sse "{loading: false}")
             (d*/merge-fragment! sse
                                 (render-file
@@ -134,10 +132,28 @@
 
 
 (selmer/add-tag! :pprint
-  (fn [args context-map]
-    (let [varname (first args)
-          value (get context-map (keyword varname))]
-      (with-out-str (utils/pprint value)))))
+    (fn [args context-map]
+      (let [varname (first args)
+            value (get context-map (keyword varname))]
+        (with-out-str (utils/pprint value)))))
+
+(def url-regex  #"(https?)://[^\s/$.?#].[^\s]*")
+(defn htmlize-urls [s] (string/replace s url-regex "<a href=\"$0\">$0</a>"))
+(defn replace-newline-with-br [x] (string/replace x #"\n" "<br>\n"))
+(defn inline-html [s] (-> s
+                          (string/replace #"<" "&lt;")
+                          (string/replace #">" "&gt;")))
+(selmer/add-filter! :htmlize-text
+                    (fn [x] [:safe (-> x
+                                       inline-html
+                                       replace-newline-with-br
+                                       htmlize-urls)]))
+(comment
+  (replace-newline-with-br "adasda\nasdsadas\n" )
+  (inline-html "<script>Hello world!</script>")
+  (string/replace "<script>Hello world!</script>" #"<" "&lt;")
+)
+
 
 (def app
   (ring/ring-handler
@@ -196,4 +212,5 @@
 (comment
   (sanitize-query "and tag:replace ")
   (selmer/cache-off!)
+  (re-find url-regex "this is test https://google.com/aaa url" )
 )

@@ -1,0 +1,9 @@
+
+{% for part in inner %}
+  <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span><span class="tag is-primary">render_related.html</span></h4>
+  {% if part.content-type = "multipart/alternative" %}
+    {% with inner2=part.content %}
+      {% include "templates/show_render_alternative2.html" %}
+    {% endwith %}
+  {% endif %}
+{% endfor %}

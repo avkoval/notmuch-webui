@@ -187,14 +187,14 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [40%]
+*** TODO Screens [33%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
     :LOGBOOK:
     - State "TODO"       from              [2025-03-04 Tue 09:20]
     :END:
-**** Messgage list screen [50%]
+**** Messgage list screen [47%]
      :LOGBOOK:
      CLOCK: [2025-03-08 Sat 18:16]--[2025-03-08 Sat 18:16] =>  0:00
      :END:
@@ -248,6 +248,11 @@ So, I am doing this to:
       CLOCK: [2025-03-14 Fri 20:27]--[2025-03-14 Fri 20:35] =>  0:08
       - State "WORKING"    from "TODO"       [2025-03-14 Fri 20:25]
       - State "TODO"       from              [2025-03-14 Fri 20:25]
+      :END:
+
+***** TODO 💾 "Save as" button & functionality
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 09:00]
       :END:
 
 ***** TODO open message screen on subject click
@@ -334,22 +339,74 @@ So, I am doing this to:
       - State "IDEA"       from "TODO"       [2025-03-04 Tue 09:20]
       :END:
 
-**** WORKING Display message screen [%]
+**** WORKING Display message screen [20%]
      :LOGBOOK:
+     CLOCK: [2025-03-29 Sat 17:11]--[2025-03-29 Sat 17:20] =>  0:09
      CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
      - State "WORKING"    from              [2025-03-20 Thu 07:55]
      :END:
 
- - [ ] add tag to pprint/debug json
- - [ ] format all parts nicely
- - [ ] add signals to show/hide parts of content
- - [ ] add top navigation part
- - [ ] vertical/horizontal/auto layout
+***** TODO fix issue with 1st page render (its 2nd?)
+      :LOGBOOK:
+      CLOCK: [2025-03-30 Sun 09:12]
+      - State "TODO"       from              [2025-03-30 Sun 09:10]
+      :END:
+
+***** DONE display text/plain [3/3]
+      CLOSED: [2025-03-30 Sun 09:10]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-30 Sun 09:10]
+      CLOCK: [2025-03-29 Sat 22:21]--[2025-03-30 Sun 09:11] =>  9:50
+      CLOCK: [2025-03-29 Sat 17:20]--[2025-03-29 Sat 22:21] =>  5:01
+      CLOCK: [2025-03-29 Sat 17:10]--[2025-03-29 Sat 17:11] =>  0:01
+      - State "WORKING"    from              [2025-03-29 Sat 17:10]
+      :END:
+
+ - [X] sanitize text - clean up all html tags
+ - [X] replace links with a hrefs
+ - [X] replace \n with <br>
+
+***** TODO display text/html
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 17:10]
+      :END:
+
+ - [ ] safe filter?
+ - [ ] embed images?
+ - [ ] new window
+ - [ ] iframe
+
+***** TODO display images
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 17:10]
+      :END:
 
 ***** TODO vertical/horizontal/auto layout
       :LOGBOOK:
       - State "TODO"       from "WORKING"    [2025-03-23 Sun 15:55]
       :END:
+
+***** DONE add tag to pprint/debug json
+      CLOSED: [2025-03-29 Sat 17:15]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-03-29 Sat 17:15]
+      :END:
+
+***** TODO vertical/horizontal/auto layout
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 17:15]
+      :END:
+***** TODO add top navigation part
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 17:15]
+      :END:
+
+***** TODO add signals to show/hide parts of content
+      :LOGBOOK:
+      - State "TODO"       from              [2025-03-29 Sat 17:15]
+      :END:
+
+***** WORKING format all parts nicely
 
 **** TODO Endless scrolling on scroll down
       :LOGBOOK:
@@ -373,6 +430,15 @@ So, I am doing this to:
 **** Configuration screen
 
    Optional, in best case we must be able to show everything based on defaults (default config)
+
+*** TODO Optimize loading
+    :LOGBOOK:
+    - State "TODO"       from              [2025-03-29 Sat 22:15]
+    :END:
+**** TODO Follow the LightHouse report of enable text compression etc
+     :LOGBOOK:
+     - State "TODO"       from              [2025-03-29 Sat 22:15]
+     :END:
 
 ** License
 

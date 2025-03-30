@@ -1,0 +1,6 @@
+{% for part in inner %}
+  <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span><span class="tag is-primary">render_alternative.html</span></h4>
+  {% if part.content-type = "text/plain" %}
+    {% include "templates/show_render_text_plain.html" %}
+  {% endif %}
+{% endfor %}

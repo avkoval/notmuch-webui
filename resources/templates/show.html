@@ -37,19 +37,36 @@
           <td>{% for tag in content.tags %}{% ifequal "unread" tag %}<i class="fa-solid fa-envelope"></i>{% endifequal %}{% endfor %}</td>
           <td>
             {% for tag in content.tags  %}
-              {{ tag }}
+                {{ tag }}
             {% endfor %}
           </td>
         </tr>
         <tr>
           <td colspan="6">
             {% with parts=content.body %}
-              {% include "templates/render_content.html"  %}
+              {#% include "templates/render_content.html"  %#}
+              {% for part in parts %}
+                <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h4>
+                <pre>{% pprint part %}</pre>
+                {% if part.content-type = "multipart/related" %}
+                  {% with inner=part.content %}
+                    {% include "templates/show_render_related.html" %}
+                  {% endwith %}
+                {% elif part.content-type = "multipart/alternative" %}
+                  {% with inner=part.content %}
+                    {% include "templates/show_render_alternative.html" %}
+                  {% endwith %}
+                {% elif part.content-type = "multipart/mixed" %}
+                  {% with inner=part.content %}
+                    {% include "templates/show_render_mixed.html" %}
+                  {% endwith %}
+                {% endif %}
+              {% endfor %}
             {% endwith %}
             {% comment %}
             {{ content.body }}
             {% for part in content.body %}
-            <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h4> 
+            <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h4>
             {% for subpart in part.content %}
             <h4 class="is-4 title">{{ subpart.id }} <span class="tag is-light">{{ subpart.content-type }}</span>
             {% if "text/html" = subpart.content-type %}
