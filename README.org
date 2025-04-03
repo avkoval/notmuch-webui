@@ -379,12 +379,15 @@ So, I am doing this to:
 
 ***** WORKING add signals to show/hide parts of content
       :LOGBOOK:
+      CLOCK: [2025-04-03 Thu 08:30]
+      CLOCK: [2025-04-03 Thu 07:40]--[2025-04-03 Thu 08:00] =>  0:20
+      CLOCK: [2025-04-02 Wed 21:48]--[2025-04-02 Wed 22:20] =>  0:32
       CLOCK: [2025-03-30 Sun 17:54]--[2025-03-30 Sun 17:54] =>  0:00
       - State "WORKING"    from "TODO"       [2025-03-30 Sun 17:55]
       - State "TODO"       from              [2025-03-29 Sat 17:15]
       :END:
 
- - [ ] remove table, use columns
+ - [X] remove table, use columns
  - [ ] use content, check responsive rendering
  - [ ] add signals to hide/show based on message N + part N
  - [ ] use nice icons to do this (triangle?)

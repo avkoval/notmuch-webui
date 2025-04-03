@@ -15,7 +15,7 @@
 {% block body %}
   <h2 class="title is-2">{{ subject }}</h2>
   {% for message in messages %}
-    {% with content=message|first %}
+    {% with content=message|first message_number=forloop.counter0 %}
       <section class="section">
         <div class="container">
           <table class="table is-fullwidth" 
@@ -48,21 +48,27 @@
         <div class="container" data-class-is-hidden="$hideMessage{{ forloop.counter0 }}">
           {% with parts=content.body %}
             {% for part in parts %}
-              <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span></h4>
-              <pre>{% pprint part %}</pre>
-              {% if part.content-type = "multipart/related" %}
-                {% with inner=part.content %}
-                  {% include "templates/show_render_related.html" %}
-                {% endwith %}
-              {% elif part.content-type = "multipart/alternative" %}
-                {% with inner=part.content %}
-                  {% include "templates/show_render_alternative.html" %}
-                {% endwith %}
-              {% elif part.content-type = "multipart/mixed" %}
-                {% with inner=part.content %}
-                  {% include "templates/show_render_mixed.html" %}
-                {% endwith %}
-              {% endif %}
+              <div data-signals-hide-message{{ message_number }}-level0-part{{ part.id }}="false">
+                <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span>
+                  <button class="button is-small is-primary"
+                          data-on-click="$hideMessage{{ message_number }}Level0Part{{ part.id }}=!$hideMessage{{ message_number }}Level0Part{{ part.id }}"
+                  >
+                    <span data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}==false">+</span>
+                    <span data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}==true">-</span>
+                  </button></h4>
+                <div data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}">
+                  {#  <pre>{% pprint part %}</pre> #}
+                  {% with inner=part.content %}
+                    {% if part.content-type = "multipart/related" %}
+                      {% include "templates/show_render_related.html" %}
+                    {% elif part.content-type = "multipart/alternative" %}
+                      {% include "templates/show_render_alternative.html" %}
+                    {% elif part.content-type = "multipart/mixed" %}
+                      {% include "templates/show_render_mixed.html" %}
+                    {% endif %}
+                  {% endwith %}
+                </div>
+              </div>
             {% endfor %}
           {% endwith %}
         </div>
