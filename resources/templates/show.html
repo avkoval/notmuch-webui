@@ -45,7 +45,7 @@
             </tr>
           </table>
         </div>
-        <div class="container" data-class-is-hidden="$hideMessage{{ forloop.counter0 }}">
+        <div class="container is-hidden" data-class-is-hidden="$hideMessage{{ forloop.counter0 }}">
           {% with parts=content.body %}
             {% for part in parts %}
               <div data-signals-hide-message{{ message_number }}-level0-part{{ part.id }}="false">

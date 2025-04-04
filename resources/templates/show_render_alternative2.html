@@ -1,6 +1,14 @@
-{% for part in inner2 %}
-  <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span><span class="tag is-primary">render_alternative2.html</span></h4>
-  {% if part.content-type = "text/plain" %}
-    {% include "templates/show_render_text_plain.html" %}
-  {% endif %}
+{% for part2 in inner2 %}
+  <div data-signals-hide-message{{ message_number }}-p0{{ part.id }}-p1{{ part1.id }}-p2{{ part2.id }}="false">
+    <h4 class="is-3 title">{{ part2.id }}<span class="tag is-light">{{ part2.content-type }}</span><span class="tag is-primary">render_alternative2.html</span>
+      {% include "templates/button-hide-level2.html" %}
+    </h4>
+    <div data-class-is-hidden="$hideMessage{{ message_number }}P0{{ part.id }}P1{{ part1.id }}P2{{ part2.id }}">
+      {% with inner=part2.content %}
+    {% if part2.content-type = "text/plain" %}
+      {% include "templates/show_render_text_plain.html" %}
+    {% endif %}
+  {% endwith %}
+    </div>
+  </div>
 {% endfor %}
