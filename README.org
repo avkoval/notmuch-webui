@@ -187,7 +187,7 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [34%]
+*** TODO Screens [35%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -343,7 +343,7 @@ So, I am doing this to:
      :LOGBOOK:
      - State "TODO"       from              [2025-04-05 Sat 17:35]
      :END:
-**** WORKING Display message screen [31%]
+**** WORKING Display message screen [35%]
      :LOGBOOK:
      CLOCK: [2025-03-29 Sat 17:11]--[2025-03-29 Sat 17:20] =>  0:09
      CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
@@ -408,6 +408,14 @@ So, I am doing this to:
  - [X] add signals to hide/show based on message N + part N
  - [X] use nice icons to do this (triangle?)
 
+***** DONE cut extremely longs URLs with some trick
+      CLOSED: [2025-04-06 Sun 16:10]
+      :LOGBOOK:
+      - State "DONE"       from "WORKING"    [2025-04-06 Sun 16:10]
+      - State "WORKING"    from "TODO"       [2025-04-06 Sun 15:50]
+      CLOCK: [2025-04-06 Sun 15:51]--[2025-04-06 Sun 16:11] =>  0:20
+      - State "TODO"       from              [2025-04-06 Sun 15:25]
+      :END:
 ***** TODO limit message list block height
       :LOGBOOK:
       - State "TODO"       from              [2025-04-04 Fri 20:55]
@@ -417,9 +425,9 @@ So, I am doing this to:
  2) [X] highlight currently selected line
  3) [ ] how to report that it is clickable from vimium? may be make subject clickable?
 
-***** TODO cut extremely longs URLs with some trick
+***** TODO auto activate the path via appropriate signals during render? or via variable directly to template?
       :LOGBOOK:
-      - State "TODO"       from              [2025-04-06 Sun 15:25]
+      - State "TODO"       from              [2025-04-06 Sun 15:50]
       :END:
 ***** TODO change icon depending on content type
       :LOGBOOK:

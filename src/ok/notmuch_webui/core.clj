@@ -137,8 +137,8 @@
             value (get context-map (keyword varname))]
         (with-out-str (utils/pprint value)))))
 
-(def url-regex  #"(https?)://[^\s/$.?#].[^\s]*")
-(defn htmlize-urls [s] (string/replace s url-regex "<a href=\"$0\">$0</a>"))
+(def url-regex  #"(https?)://[^\s/$.?#].[^\s|\)]*")
+(defn htmlize-urls [s] (println s) (string/replace s url-regex "<a href=\"$0\">→</a>"))
 (defn replace-newline-with-br [x] (string/replace x #"\n" "<br>\n"))
 (defn inline-html [s] (-> s
                           (string/replace #"<" "&lt;")
@@ -146,8 +146,9 @@
 (selmer/add-filter! :htmlize-text
                     (fn [x] [:safe (-> x
                                        inline-html
+                                       htmlize-urls
                                        replace-newline-with-br
-                                       htmlize-urls)]))
+                                       )]))
 (comment
   (replace-newline-with-br "adasda\nasdsadas\n" )
   (inline-html "<script>Hello world!</script>")
