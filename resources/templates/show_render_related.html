@@ -1,14 +1,28 @@
-{% for part1 in inner %}
-  <div data-signals-hide-message{{ message_number }}-level1-part{{ part.id }}-part{{ part1.id }}="false">
-    <h4 class="is-3 title">{{ part1.id }}<span class="tag is-light">{{ part1.content-type }}</span><span class="tag is-primary">render_related.html</span>
-      {% include "templates/button-hide-level1.html" %}
-    </h4>
-    <div data-class-is-hidden="$hideMessage{{ message_number }}Level1Part{{ part.id }}Part{{ part1.id }}">
-      {% if part1.content-type = "multipart/alternative" %}
-        {% with inner2=part1.content %}
-          {% include "templates/show_render_alternative2.html" %}
-        {% endwith %}
-      {% endif %}
-    </div>
+<div>
+  <div class="tabs is-boxed">
+    <ul>
+      {% for part1 in inner %}
+        <li data-signals-tab-message{{ message_number }}-part{{ part.id }}="null"
+            data-class-is-active="$tabMessage{{ message_number }}Part{{ part.id }}=={{  part1.id }}"
+        >
+          <a title="TODO add more type information here"
+             data-on-click="$displayPart='Message{{ message_number }}Part{{ part.id }}Part{{ part1.id }}'; $tabMessage{{ message_number }}Part{{ part.id }} = {{ part1.id }}">
+            <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+            <span>{{ part1.id }}. {{ part1.content-type }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
   </div>
-{% endfor %}
+  {% for part1 in inner %} {# TODO render level1.html? #}
+    <div data-class-is-hidden="$tabMessage{{ message_number }}Part{{ part.id }}!={{  part1.id }}">
+      {% with inner2=part1.content %}
+        {% if part1.content-type = "text/plain" %}
+          {% include "templates/show_render_text_plain.html" %}
+        {% elif part1.content-type = "multipart/alternative" %}
+          {% include "templates/show_render_alternative2.html" %}
+        {% endif %}
+      {% endwith %}
+    </div>
+  {% endfor %}
+</div>

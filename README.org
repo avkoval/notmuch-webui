@@ -339,7 +339,11 @@ So, I am doing this to:
       - State "IDEA"       from "TODO"       [2025-03-04 Tue 09:20]
       :END:
 
-**** WORKING Display message screen [35%]
+**** TODO add menu to go home and all other things like select by tag, settings, etc
+     :LOGBOOK:
+     - State "TODO"       from              [2025-04-05 Sat 17:35]
+     :END:
+**** WORKING Display message screen [33%]
      :LOGBOOK:
      CLOCK: [2025-03-29 Sat 17:11]--[2025-03-29 Sat 17:20] =>  0:09
      CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
@@ -384,9 +388,11 @@ So, I am doing this to:
       - State "TODO"       from              [2025-04-04 Fri 19:50]
       :END:
 
-***** WORKING add signals to show/hide parts of content
+***** DONE add signals to show/hide parts of content
+      CLOSED: [2025-04-04 Fri 20:55]
       :LOGBOOK:
-      CLOCK: [2025-04-04 Fri 20:28]
+      - State "DONE"       from "WORKING"    [2025-04-04 Fri 20:55]
+      CLOCK: [2025-04-04 Fri 20:28]--[2025-04-04 Fri 20:56] =>  0:28
       - State "WORKING"    from "DONE"       [2025-04-04 Fri 19:55]
       - State "DONE"       from "WORKING"    [2025-04-04 Fri 19:55]
       CLOCK: [2025-04-03 Thu 08:30]--[2025-04-03 Thu 10:17] =>  1:47
@@ -398,22 +404,37 @@ So, I am doing this to:
       :END:
 
  - [X] remove table, use columns
- - [ ] use content, check responsive rendering
- - [ ] add signals to hide/show based on message N + part N
- - [ ] use nice icons to do this (triangle?)
+ - [X] use content, check responsive rendering
+ - [X] add signals to hide/show based on message N + part N
+ - [X] use nice icons to do this (triangle?)
+
+***** TODO limit message list block height
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-04 Fri 20:55]
+      :END:
+
+ 1) [X] Limit only when message cursor is selected and message is shown
+ 2) [X] highlight currently selected line
+ 3) [ ] how to report that it is clickable from vimium? may be make subject clickable?
+
+***** TODO change icon depending on content type
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-06 Sun 14:40]
+      :END:
 
 ***** TODO display images
       :LOGBOOK:
       - State "TODO"       from              [2025-03-29 Sat 17:10]
       :END:
 
-***** TODO make message clickable by vimium
+***** TODO display tags as tags
       :LOGBOOK:
-      - State "TODO"       from              [2025-04-04 Fri 19:50]
+      - State "TODO"       from              [2025-04-04 Fri 20:55]
       :END:
 
 ***** TODO display text/html
       :LOGBOOK:
+      CLOCK: [2025-04-04 Fri 20:56]--[2025-04-05 Sat 08:18] => 11:22
       - State "TODO"       from              [2025-03-29 Sat 17:10]
       :END:
 
@@ -421,6 +442,11 @@ So, I am doing this to:
  - [ ] embed images?
  - [ ] new window
  - [ ] iframe
+
+***** TODO make message clickable by vimium
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-04 Fri 19:50]
+      :END:
 
 ***** TODO vertical/horizontal/auto layout
       :LOGBOOK:
@@ -442,8 +468,14 @@ So, I am doing this to:
       :LOGBOOK:
       - State "TODO"       from              [2025-03-29 Sat 17:15]
       :END:
-
-
+***** TODO Change color scheme to custom
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-05 Sat 12:50]
+      :END:
+***** TODO Should not include CSS as source? Use some JS stack builder and minimize ?
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-05 Sat 12:50]
+      :END:
 **** TODO Endless scrolling on scroll down
       :LOGBOOK:
       - State "TODO"       from              [2025-03-02 Sun 17:25]
