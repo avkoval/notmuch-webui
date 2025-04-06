@@ -187,7 +187,7 @@ So, I am doing this to:
 
 **** Unsorted
 
-*** TODO Screens [35%]
+*** TODO Screens [34%]
     :PROPERTIES:
     :COOKIE_DATA: recursive
     :END:
@@ -343,7 +343,7 @@ So, I am doing this to:
      :LOGBOOK:
      - State "TODO"       from              [2025-04-05 Sat 17:35]
      :END:
-**** WORKING Display message screen [33%]
+**** WORKING Display message screen [31%]
      :LOGBOOK:
      CLOCK: [2025-03-29 Sat 17:11]--[2025-03-29 Sat 17:20] =>  0:09
      CLOCK: [2025-03-20 Thu 07:57]--[2025-03-20 Thu 09:55] =>  1:58
@@ -417,6 +417,10 @@ So, I am doing this to:
  2) [X] highlight currently selected line
  3) [ ] how to report that it is clickable from vimium? may be make subject clickable?
 
+***** TODO cut extremely longs URLs with some trick
+      :LOGBOOK:
+      - State "TODO"       from              [2025-04-06 Sun 15:25]
+      :END:
 ***** TODO change icon depending on content type
       :LOGBOOK:
       - State "TODO"       from              [2025-04-06 Sun 14:40]

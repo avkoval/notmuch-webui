@@ -1,4 +1,4 @@
-`<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -11,6 +11,7 @@
     {% block extra-head %}{% endblock %}
   </head>
   <body>
+    {% include "templates/navbar.html" %}
     {% block body %}{% endblock %}
   </body>
 </html>
