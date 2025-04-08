@@ -5,11 +5,13 @@
         <li  data-signals-tab-message{{ message_number }}-part{{ part.id }}="null"
              data-class-is-active="$tabMessage{{ message_number }}Part{{ part.id }}=={{  part1.id }}"
         >
-          <a title="TODO add more type information here"
-             data-on-click="$displayPart='Message{{ message_number }}Part{{ part.id }}Part{{ part1.id }}'; $tabMessage{{ message_number }}Part{{ part.id }} = {{ part1.id }}">
-            <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-            <span>{{ part1.id }}. {{ part1.content-type }}</span>
-          </a>
+          {% with content-type = part1.content-type %}
+            <a title="TODO add more type information here"
+               data-on-click="$displayPart='Message{{ message_number }}Part{{ part.id }}Part{{ part1.id }}'; $tabMessage{{ message_number }}Part{{ part.id }} = {{ part1.id }}">
+              <span class="icon is-small"><i class="{% include "templates/icon-class-for-content-type.html" %}" aria-hidden="true"></i></span>
+              <span>{{ part1.id }}. {{ part1.content-type }}</span>
+            </a>
+          {% endwith %}
         </li>
       {% endfor %}
     </ul>

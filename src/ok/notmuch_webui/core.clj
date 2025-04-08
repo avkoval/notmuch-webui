@@ -138,7 +138,7 @@
         (with-out-str (utils/pprint value)))))
 
 (def url-regex  #"(https?)://[^\s/$.?#].[^\s|\)]*")
-(defn htmlize-urls [s] (println s) (string/replace s url-regex "<a href=\"$0\">→</a>"))
+(defn htmlize-urls [s] (string/replace s url-regex "<a href=\"$0\">→</a>"))
 (defn replace-newline-with-br [x] (string/replace x #"\n" "<br>\n"))
 (defn inline-html [s] (-> s
                           (string/replace #"<" "&lt;")

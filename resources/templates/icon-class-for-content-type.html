@@ -1,0 +1,13 @@
+{% if content-type = "text/plain" %}
+  fa-solid fa-envelope-open-text
+{% elif content-type = "text/html" %}
+  fa-solid fa-globe
+{% elif content-type = "multipart/alternative" %}
+  fa-solid fa-industry
+{% elif content-type = "multipart/related" %}
+  fa-solid fa-layer-group
+{% elif content-type = "image/png" %}
+  fas fa-image
+{% else %}
+  fa-solid fa-circle-question
+{% endif %}

@@ -10,7 +10,7 @@
      margin-bottom: 1px !important;
    }
    .limited-height {
-     max-height: 250px; /* Set your desired height */
+     max-height: 300px; /* Set your desired height */
      overflow-y: auto;  /* Adds a scrollbar if content exceeds the height */
    }
    .custom-border {
@@ -22,7 +22,12 @@
 {% endblock %}
 
 {% block body %}
-  <section class="section pb-0 pt-0" data-signals-display-message="null" data-signals-display-part="null">
+  <section class="section pb-0 pt-0" data-signals-display-message="0"
+           data-on-keydown__window="switch(evt.key) {
+                  case 'ArrowRight': $displayMessage = $displayMessage + 1; break;
+                  case 'ArrowLeft': $displayMessage = $displayMessage - 1; break;
+                  }; ''"
+           data-signals-display-part="null">
     <h2 class="title is-2">{{ subject }}</h2>
     <div class="box table-container is-narrow limited-height">
       <table class="table is-fullwidth">
@@ -60,83 +65,48 @@
 
   <section class="section">
     {% for message in messages %}
-    {% with content=message|first message_number=forloop.counter0 %}
-      <div class="is-hidden" 
-           data-class-is-hidden="$displayMessage!={{ forloop.counter0 }}"  
-           data-signals-show-tab-message{{ message_number }}="null">
-        {% with parts=content.body %}
-          <div class="tabs is-boxed">
-            <ul>
-              {% for part in parts %}
-                <li
-                  data-signals-show-message{{message_number}}-part{{ part.id }}="false"
-                  data-class-is-active="$showTabMessage{{ message_number }}=={{ part.id }}">
-                  <a data-on-click="$showTabMessage{{ message_number }}={{ part.id }}; $showMessage{{ message_number }}Part{{ part.id }}=true">
-                    <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
-                    <span>{{ part.id }}. {{ part.content-type }}</span>
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          {% for part in parts %}
-            <div>
-              <div class="is-hidden" data-class-is-hidden="!$showMessage{{ message_number }}Part{{ part.id }}">
-                {#  <pre>{% pprint part %}</pre> #}
-                {% with inner=part.content %}
-                  {% if part.content-type = "multipart/related" %}
-                    {% include "templates/show_render_related.html" %}
-                  {% elif part.content-type = "multipart/alternative" %}
-                    {% include "templates/show_render_alternative.html" %}
-                  {% elif part.content-type = "multipart/mixed" %}
-                    {% include "templates/show_render_mixed.html" %}
-                  {% endif %}
-                {% endwith %}
-              </div>
+      {% with content=message|first message_number=forloop.counter0 %}
+        <div class="is-hidden"
+             data-class-is-hidden="$displayMessage!={{ forloop.counter0 }}"
+             data-signals-show-tab-message{{ message_number }}="null">
+          {% with parts=content.body %}
+            <div class="tabs is-boxed">
+              <ul>
+                {% for part in parts %}
+                  <li
+                    data-signals-show-message{{message_number}}-part{{ part.id }}="false"
+                    data-class-is-active="$showTabMessage{{ message_number }}=={{ part.id }}">
+                    <a data-on-click="$showTabMessage{{ message_number }}={{ part.id }}; $showMessage{{ message_number }}Part{{ part.id }}=true">
+                      {% with content-type=part.content-type %}
+                      <span class="icon is-small"><i class="{% include "templates/icon-class-for-content-type.html" %}" aria-hidden="true"></i></span>
+                      {% endwith %}
+                      <span>{{ part.id }}. {{ part.content-type }}</span>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
             </div>
-          {% endfor %}
-              
-        {% endwith %}
-      </div>
-    {% endwith %}
-  {% endfor %}
-  </section>
-
-  {% comment %}
-    <section class="section">
-      {% for message in messages %}
-        {% with content=message|first message_number=forloop.counter0 %}
-          <div class="container is-hidden" data-class-is-hidden="$displayMessage!={{ forloop.counter0 }}">
-            {% with parts=content.body %}
-              {% for part in parts %}
-                <div data-signals-hide-message{{ message_number }}-level0-part{{ part.id }}="false">
-                  <h4 class="is-3 title">{{ part.id }}<span class="tag is-light">{{ part.content-type }}</span>
-                    <button class="button is-small is-primary"
-                            data-on-click="$hideMessage{{ message_number }}Level0Part{{ part.id }}=!$hideMessage{{ message_number }}Level0Part{{ part.id }}"
-                    >
-                      <span data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}==false">+</span>
-                      <span data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}==true">-</span>
-                    </button></h4>
-                  <div data-class-is-hidden="$hideMessage{{ message_number }}Level0Part{{ part.id }}">
-                    {#  <pre>{% pprint part %}</pre> #}
-                    {% with inner=part.content %}
-                      {% if part.content-type = "multipart/related" %}
-                        {% include "templates/show_render_related.html" %}
-                      {% elif part.content-type = "multipart/alternative" %}
-                        {% include "templates/show_render_alternative.html" %}
-                      {% elif part.content-type = "multipart/mixed" %}
-                        {% include "templates/show_render_mixed.html" %}
-                      {% endif %}
-                    {% endwith %}
-                  </div>
+            {% for part in parts %}
+              <div>
+                <div class="is-hidden" data-class-is-hidden="!$showMessage{{ message_number }}Part{{ part.id }}">
+                  {#  <pre>{% pprint part %}</pre> #}
+                  {% with inner=part.content %}
+                    {% if part.content-type = "multipart/related" %}
+                      {% include "templates/show_render_related.html" %}
+                    {% elif part.content-type = "multipart/alternative" %}
+                      {% include "templates/show_render_alternative.html" %}
+                    {% elif part.content-type = "multipart/mixed" %}
+                      {% include "templates/show_render_mixed.html" %}
+                    {% endif %}
+                  {% endwith %}
                 </div>
-              {% endfor %}
-            {% endwith %}
-          </div>
-        {% endwith %}
-      {% endfor %}
-    </section>
-  {% endcomment %}
+              </div>
+            {% endfor %}
+
+          {% endwith %}
+        </div>
+      {% endwith %}
+    {% endfor %}
+  </section>
 
 {% endblock %}
