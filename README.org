@@ -442,6 +442,20 @@ Tried, did not liked it.
       - State "TODO"       from              [2025-04-06 Sun 14:40]
       :END:
 
+***** WORKING display text/html [40%]
+      :LOGBOOK:
+      - State "WORKING"    from "TODO"       [2025-04-14 Mon 07:40]
+      CLOCK: [2025-04-14 Mon 07:05]--[2025-04-14 Mon 07:41] =>  0:36
+      CLOCK: [2025-04-04 Fri 20:56]--[2025-04-05 Sat 08:18] => 11:22
+      - State "TODO"       from              [2025-03-29 Sat 17:10]
+      :END:
+
+ - [X] Add URL in backend and frontend.
+ - [X] make a button for new window
+ - [ ] send html to iframe
+ - [ ] safe filter?
+ - [ ] embed images?
+
 ***** TODO display images
       :LOGBOOK:
       - State "TODO"       from              [2025-03-29 Sat 17:10]
@@ -451,17 +465,6 @@ Tried, did not liked it.
       :LOGBOOK:
       - State "TODO"       from              [2025-04-04 Fri 20:55]
       :END:
-
-***** TODO display text/html
-      :LOGBOOK:
-      CLOCK: [2025-04-04 Fri 20:56]--[2025-04-05 Sat 08:18] => 11:22
-      - State "TODO"       from              [2025-03-29 Sat 17:10]
-      :END:
-
- - [ ] safe filter?
- - [ ] embed images?
- - [ ] new window
- - [ ] iframe
 
 ***** TODO make message clickable by vimium
       :LOGBOOK:

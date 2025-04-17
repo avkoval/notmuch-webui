@@ -79,6 +79,17 @@
                                                :count search-results-count
                                                :search-query query})}))
 
+(defn render-html [{:keys [query-string path-params]}]
+  (let [query-params (utils/decode-form-params query-string)  ;; TODO remove let if not used
+        part (notmuch/show-part (:message-id path-params) (:part-id path-params))
+        ]
+    ;; (utils/pprint messages)
+    ;;(println path-params)
+    ;; (println part-content)
+    ;; notmuch show id:1285753537.12228576.1744551012030@ltx1-app67844.prod.linkedin.com
+    {:status 200
+     :headers {"Content-Type" "text/html"}
+     :body (render-file "templates/show_html.html" {:part part})}))
 
 
 (defn paginator [request]
@@ -164,6 +175,7 @@
       ["/notmuch-search" {:post notmuch-search}]
       ["/notmuch-show" {:get show}]
       ["/paginator" {:get paginator}]
+      ["/render-html/:message-id/:part-id" {:get render-html}]
       ])
     (constantly {:status 404, :body "Not Found."})))
 

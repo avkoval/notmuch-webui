@@ -4,7 +4,8 @@
    [babashka.process :refer [shell]]
    [clojure.tools.logging :as log]
    [clojure.data.json :as json]
-   [clojure.core.cache :as cache]))
+   [clojure.core.cache :as cache]
+   [ok.notmuch-webui.utils :as utils]))
 
 (def notmuch-binary "notmuch")
 (def default-search-options {"--offset" 0, "--limit" 10, "--sort" "newest-first", "--format" "json", "--output" "summary"})
@@ -72,6 +73,16 @@
     (json/read-str (:out output) {:eof-error? false :eof-value nil})
     )
   )
+
+(defn show-part [message-id part-id]
+  (let [cmd-options (merge default-show-options {"--part" (utils/parse-number-alt part-id) "--include-html" ""})
+        show-args (str "id:" message-id)
+        message (show show-args cmd-options)
+        ]
+    (println cmd-options)
+    message
+    )  
+)
 
 (comment
   (search-results-count "tag:inbox" {})

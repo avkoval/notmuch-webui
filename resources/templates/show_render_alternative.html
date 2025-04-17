@@ -24,6 +24,9 @@
           {% include "templates/show_render_alternative2.html" %}
         {% elif part1.content-type = "text/plain" %}
           {% include "templates/show_render_text_plain.html" %}
+        {% elif part1.content-type = "text/html" %}
+          <a class="button" target="_blank" href="/render-html/{{ content.id }}/{{ part1.id }}">View in external window</a>
+          <button class="button">View in iframe</button>
         {% endif %}
       {% endwith %}
     </div>
